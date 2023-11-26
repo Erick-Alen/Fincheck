@@ -1,21 +1,18 @@
-import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Get('/me')
+  me(@Req() request: any) {
+    const { userId } = request
+    console.log(userId);
 
-  create(@Body() createUserDto: CreateUserDto) {
-    const { email, name, password } = createUserDto;
-    if (!email || !name || !password) {
-      throw new BadRequestException('Missing required fields');
-    }
-    return this.usersService.create(createUserDto);
+    return this.usersService.getUserById('userId');
   }
+
 
   // @Get()
   // findAll() {

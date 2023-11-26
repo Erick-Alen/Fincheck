@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsEmail, MinLength } from 'class-validator';
 
-export class CreateUserDto {
+export class SignUpDto {
   //ordem dos pipes não tem importância
   @IsString()
   @IsNotEmpty()
