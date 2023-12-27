@@ -9,7 +9,6 @@ export class UsersController {
   @Get('/me')
   me(@ActiveUserId() userId: string) {
     // const { userId } = request
-    // console.log(userId);
 
     return this.usersService.getUserById(userId);
   }
