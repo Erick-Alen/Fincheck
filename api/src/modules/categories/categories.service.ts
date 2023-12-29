@@ -1,12 +1,10 @@
 import { CategoriesRepository } from './../../shared/database/repositories/categories.repository';
 import { Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoriesService {
   constructor(private readonly categoriesRepo: CategoriesRepository) { }
-  
+
   findAllByUserId(userId: string) {
     return this.categoriesRepo.findMany({
       where: { userId }
