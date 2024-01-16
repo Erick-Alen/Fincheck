@@ -8,7 +8,7 @@ interface InputProps extends ComponentProps<'input'> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ placeholder, name, id, error, ...props }, ref) => {
+  ({ placeholder, name, id, error, className, ...props }, ref) => {
     const inputId = id ?? name;
     return (
       <div className='relative'>
@@ -17,8 +17,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           name={name}
           id={inputId}
-          className={cn('w-full bg-white rounded-lg border border-gray-500 text-gray-800 px-3 h-[52px] pt-4 peer placeholder-shown:pt-0 focus:outline-slate-600 transition-all',
-              error && '!border-red-900 ! focus: !outline-red-900'
+          className={cn(
+            'w-full bg-white rounded-lg border border-gray-500 text-gray-800 px-3 h-[52px] pt-4 peer placeholder-shown:pt-0 focus:outline-slate-600 transition-all',
+            error && '!border-red-900 ! focus: !outline-red-900',
+            className
           )}
           placeholder=' '
         />

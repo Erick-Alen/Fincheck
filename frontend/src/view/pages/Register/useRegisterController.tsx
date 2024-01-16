@@ -1,0 +1,28 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod'
+
+const schema = z.object({
+  name: z.string().min(1, 'name mandatory'),
+  email: z.string().min(1, 'email mandatory').email('invalid email'),
+  password: z
+    .string()
+    .min(1, 'password mandatory')
+    .min(8, 'password must contain at least 8 characters'),
+});
+
+type FormData = z.infer<typeof schema>
+
+export const useRegisterController = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+  const onSubmit = handleSubmit(((data) => {
+    console.log(data)
+  }))
+  return { register, errors, onSubmit };
+}
