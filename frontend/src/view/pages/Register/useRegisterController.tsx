@@ -1,6 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod'
+import { authService } from '../../../app/services/authService';
+import { useMutation } from '@tanstack/react-query';
+import { SignUpRequest } from '../../../app/services/authService/signup';
+import toast from 'react-hot-toast';
 
 const schema = z.object({
   name: z.string().min(1, 'name mandatory'),
@@ -21,8 +25,22 @@ export const useRegisterController = () => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-  const onSubmit = handleSubmit(((data) => {
-    console.log(data)
-  }))
-  return { register, errors, onSubmit };
+
+
+  const { mutateAsync, isPending } = useMutation({
+    // mutationKey: ['signup-user'],
+    mutationFn: async (data: SignUpRequest) => {
+      return authService.signup(data)
+    },
+  });
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await mutateAsync(data);
+      toast.success("User registered!")
+    } catch {
+      toast.error("Email already exists!")
+    }
+    // mutate()
+  });
+  return { register, errors, onSubmit, isPending };
 }

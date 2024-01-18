@@ -4,7 +4,7 @@ import { Button } from '../../components/Button';
 import { useLoginController } from './useLoginController';
 
 export const Login = () => {
-  const { onSubmit, register, errors } = useLoginController();
+  const { onSubmit, register, errors, isPending } = useLoginController();
   return (
     <>
       <header className='w-full flex flex-col items-center gap-4 text-center'>
@@ -28,8 +28,17 @@ export const Login = () => {
           placeholder='E-mail'
           type='email'
         />
-        <Input {...register('password')} error={errors.password?.message} placeholder='Senha' type='password' />
-        <Button type='submit' className='bg-teal-900 mt-2 px-6'>
+        <Input
+          {...register('password')}
+          error={errors.password?.message}
+          placeholder='Senha'
+          type='password'
+        />
+        <Button
+          isPending={isPending}
+          type='submit'
+          className='bg-teal-900 mt-2 px-6'
+        >
           Entrar
         </Button>
       </form>

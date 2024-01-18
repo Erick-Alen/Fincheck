@@ -1,6 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod'
+import { authService } from '../../../app/services/authService';
+import { useMutation } from '@tanstack/react-query';
+import { SignInRequest } from '../../../app/services/authService/signin';
+import toast from 'react-hot-toast';
 
 const schema = z.object({
   email: z.string().min(1, 'email mandatory').email('invalid email'),
@@ -14,12 +18,20 @@ export const useLoginController = () => {
   const { handleSubmit, register, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema)
   });
-
-  const onSubmit = handleSubmit((data) => {
-    const { success } = schema.safeParse(data);
-    if (errors) {
-      console.log(errors)
-    }
+  const { mutateAsync, isPending } = useMutation({
+    // mutationKey: ['signup-user'],
+    mutationFn: async (data: SignInRequest) => {
+      return authService.signin(data);
+    },
   });
-  return { onSubmit, register, errors };
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await mutateAsync(data);
+      toast.success('User registered!');
+    } catch {
+      toast.error('Invalid credentials!');
+    }
+    // mutate()
+  });
+  return { onSubmit, register, errors, isPending };
 };

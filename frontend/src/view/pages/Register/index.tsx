@@ -4,7 +4,7 @@ import { Button } from '../../components/Button';
 import { useRegisterController } from './useRegisterController';
 
 export const Register = () => {
-  const { errors, onSubmit, register } = useRegisterController()
+  const { errors, onSubmit, register, isPending } = useRegisterController()
   return (
     <>
       <header className='w-full flex flex-col items-center gap-4 text-center'>
@@ -21,11 +21,33 @@ export const Register = () => {
           </Link>
         </p>
       </header>
-      <form onSubmit={onSubmit} className='w-full flex flex-col gap-4 mt-16' action='submit'>
-        <Input {...register("name")} error={errors.name?.message}  placeholder='Nome' />
-        <Input {...register("email")} error={errors.email?.message} placeholder='E-mail' type='email' />
-        <Input {...register("password")} error={errors.password?.message} placeholder='Senha' type='password' />
-        <Button type='submit' className='bg-teal-900 mt-2 px-6'>
+      <form
+        onSubmit={onSubmit}
+        className='w-full flex flex-col gap-4 mt-16'
+        action='submit'
+      >
+        <Input
+          {...register('name')}
+          error={errors.name?.message}
+          placeholder='Nome'
+        />
+        <Input
+          {...register('email')}
+          error={errors.email?.message}
+          placeholder='E-mail'
+          type='email'
+        />
+        <Input
+          {...register('password')}
+          error={errors.password?.message}
+          placeholder='Senha'
+          type='password'
+        />
+        <Button
+          isPending={isPending}
+          type='submit'
+          className='bg-teal-900 mt-2 px-6'
+        >
           Criar conta
         </Button>
       </form>
