@@ -20,7 +20,6 @@ const Dashboard = () => {
         <div className='w-wull md:w-1/2'>
           <Transactions />
         </div>
-
       </main>
       <button onClick={signOut}>sair</button>
     </div>
