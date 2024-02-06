@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../app/hooks/useAuth';
+import { routes } from './routes';
 
 type AuthGuardProps = {
   signedIn?: boolean;
@@ -7,16 +8,19 @@ type AuthGuardProps = {
 };
 
 export const AuthGuard = ({ isPrivate }: AuthGuardProps) => {
-  const { signedIn } = useAuth()
+  const { signedIn } = useAuth();
+
   if (!signedIn && isPrivate) {
     //redirect to /login
-    return <Navigate to={'/login'} replace />;
+    return <Navigate to={routes.login} replace />;
     //replace => user can't go back to a private route after logging in
   }
+
   if (signedIn && !isPrivate) {
     //redirect to /dashboard
-    return <Navigate to={'/'} />;
+    return <Navigate to={routes.dashboard} />;
   }
+
   return (
     //   <div>
     //     <header className='w-full bg-green-600 h-10'></header>

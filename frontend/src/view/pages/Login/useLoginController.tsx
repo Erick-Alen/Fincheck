@@ -5,6 +5,7 @@ import { authService } from '../../../app/services/authService';
 import { useMutation } from '@tanstack/react-query';
 import { SignInRequest } from '../../../app/services/authService/signin';
 import toast from 'react-hot-toast';
+import { useAuth } from '@/app/hooks/useAuth';
 
 const schema = z.object({
   email: z.string().min(1, 'email mandatory').email('invalid email'),
@@ -18,16 +19,21 @@ export const useLoginController = () => {
   const { handleSubmit, register, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema)
   });
+
   const { mutateAsync, isPending } = useMutation({
     // mutationKey: ['signup-user'],
     mutationFn: async (data: SignInRequest) => {
       return authService.signin(data);
     },
   });
+
+  const { signIn } = useAuth();
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await mutateAsync(data);
-      toast.success('User registered!');
+      const { accessToken } = await mutateAsync(data);
+      signIn(accessToken)
+      toast.success('logged in!');
     } catch {
       toast.error('Invalid credentials!');
     }

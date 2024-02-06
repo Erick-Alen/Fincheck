@@ -3,7 +3,7 @@ import illustration from '../../assets/images/login.png';
 // import bankCard from '../../assets/images/bank-card-double.png';
 import { Logo } from '../components/Logo';
 
-export const AuthLayout = () => {
+const AuthLayout = () => {
   // mobile first concept applied in the components
 
   return (
@@ -31,3 +31,5 @@ export const AuthLayout = () => {
     </div>
   );
 };
+
+export default AuthLayout;

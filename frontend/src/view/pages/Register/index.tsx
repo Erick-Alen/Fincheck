@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { useRegisterController } from './useRegisterController';
+import { routes } from '@/router/routes';
 
-export const Register = () => {
+const Register = () => {
   const { errors, onSubmit, register, isPending } = useRegisterController()
   return (
     <>
@@ -14,7 +15,7 @@ export const Register = () => {
         <p className='space-x-2 tracking-[-0.5px]'>
           <span className='text-gray-700'>Já possui uma conta?</span>
           <Link
-            to='/login'
+            to={routes.login}
             className='text-teal-900 font-medium tracking-[-0.5px]'
           >
             Fazer Login
@@ -54,3 +55,5 @@ export const Register = () => {
     </>
   );
 };
+
+export default Register;

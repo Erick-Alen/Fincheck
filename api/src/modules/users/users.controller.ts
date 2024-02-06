@@ -10,7 +10,7 @@ export class UsersController {
   me(@ActiveUserId() userId: string) {
     // const { userId } = request
 
-    return this.usersService.getUserById(userId);
+    return this.usersService.getUserById(userId); 
   }
 
 

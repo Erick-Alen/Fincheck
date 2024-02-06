@@ -5,6 +5,7 @@ import { authService } from '../../../app/services/authService';
 import { useMutation } from '@tanstack/react-query';
 import { SignUpRequest } from '../../../app/services/authService/signup';
 import toast from 'react-hot-toast';
+import { useAuth } from '@/app/hooks/useAuth';
 
 const schema = z.object({
   name: z.string().min(1, 'name mandatory'),
@@ -33,12 +34,16 @@ export const useRegisterController = () => {
       return authService.signup(data)
     },
   });
+
+  const { signIn } = useAuth();
+
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await mutateAsync(data);
-      toast.success("User registered!")
+      const { accessToken } = await mutateAsync(data);
+      signIn(accessToken)
+      toast.success("Login success!")
     } catch {
-      toast.error("Email already exists!")
+      toast.error("Connection refused!")
     }
     // mutate()
   });
