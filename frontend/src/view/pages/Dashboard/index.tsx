@@ -2,7 +2,7 @@ import { useAuth } from '@/app/hooks/useAuth';
 import { Logo } from '@/view/components/Logo';
 import { UserMenu } from '@/view/components/UserMenu';
 import { Accounts } from './components/Accounts';
-import { Transactions } from './components/Transactions';
+import { Transactions } from './components/Transactions/index.tsx.tsx';
 
 const Dashboard = () => {
   const { signOut } = useAuth();

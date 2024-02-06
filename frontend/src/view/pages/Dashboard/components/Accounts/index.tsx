@@ -3,7 +3,7 @@ import { AccountCard } from './AccountCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
-import { AccountsSliderNavigation } from './AccountsSliderNavigation';
+import { AccountsSliderNavigation } from './SliderNavigation';
 import { useAccountsController } from './useAccountsController';
 
 export const Accounts = () => {
