@@ -3,6 +3,8 @@ import { UserMenu } from '@/view/components/UserMenu';
 import { Accounts } from './components/Accounts';
 import { Transactions } from './components/Transactions/index.tsx';
 import { DashboardProvider } from './components/DashboardContext/index.tsx';
+import { Fab } from './components/Fab/index.tsx';
+import { Modal } from '@/view/components/Modal.tsx';
 
 const Dashboard = () => {
   return (
@@ -22,6 +24,8 @@ const Dashboard = () => {
             <Transactions />
           </div>
         </main>
+        <Fab />
+
       </div>
     </DashboardProvider>
   );

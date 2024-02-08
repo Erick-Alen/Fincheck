@@ -22,7 +22,7 @@ export const App = () => {
     //   </header>
     // </div>
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools/>
+      <ReactQueryDevtools buttonPosition='bottom-left' />
       <AuthProvider>
         <Router />
         <Toaster />

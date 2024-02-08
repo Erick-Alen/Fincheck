@@ -1,5 +1,5 @@
 import { cn } from '@/app/utils/cn';
-import * as radixDropdown from '@radix-ui/react-dropdown-menu';
+import * as RadixDropdown from '@radix-ui/react-dropdown-menu';
 
 type DropdownMenuProps = {
   children: React.ReactNode;
@@ -8,10 +8,10 @@ type DropdownMenuProps = {
 };
 
 const DropdownMenuRoot = ({ children }: { children: React.ReactNode }) => {
-  return <radixDropdown.Root>{children}</radixDropdown.Root>;
+  return <RadixDropdown.Root>{children}</RadixDropdown.Root>;
 };
 const DropdownMenuTrigger = ({ children }: { children: React.ReactNode }) => {
-  return <radixDropdown.Trigger>{children}</radixDropdown.Trigger>;
+  return <RadixDropdown.Trigger className='outline-none' asChild>{children}</RadixDropdown.Trigger>;
 };
 
 const DropdownMenuPortalContent = ({
@@ -19,16 +19,17 @@ const DropdownMenuPortalContent = ({
   className,
 }: DropdownMenuProps) => {
   return (
-    <radixDropdown.Portal>
-      <radixDropdown.Content
+    <RadixDropdown.Portal>
+      <RadixDropdown.Content
         className={cn(
-          'bg-white outline-none rounded-2xl space-y-2 shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)] data-[side=bottom]:animate-slideUpAndFade',
+          'bg-white outline-none rounded-xl space-y-1 shadow-[0px_11px_20px_0px_rgba(0,0,0,0.10)] z-50',
+          'data-[side=bottom]:animate-slideUpAndFade data-[side=top]:animate-slideDownAndFade ',
           className
         )}
       >
         {children}
-      </radixDropdown.Content>
-    </radixDropdown.Portal>
+      </RadixDropdown.Content>
+    </RadixDropdown.Portal>
   );
 };
 
@@ -38,15 +39,15 @@ const DropdownMenuItem = ({
   onClick,
 }: DropdownMenuProps) => {
   return (
-    <radixDropdown.Item
+    <RadixDropdown.Item
       onSelect={onClick}
       className={cn(
-        'min-h-12 outline-none flex items-center px-4 py-2 text-gray-800 text-sm hover:bg-gray-50 rounded-2xl transition-colors data-[highlighted]:bg-gray-50',
+        'min-h-10 outline-none cursor-pointer flex items-center px-4 py-2 text-gray-800 text-sm hover:bg-gray-50 rounded-xl transition-colors data-[highlighted]:bg-gray-50',
         className
       )}
     >
       {children}
-    </radixDropdown.Item>
+    </RadixDropdown.Item>
   );
 };
 
