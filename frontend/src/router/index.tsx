@@ -6,6 +6,7 @@ import { AuthGuard } from './AuthGuard';
 // import { AuthLayout } from '../view/Layouts/AuthLayout';
 import { routes } from './routes';
 import { Suspense, lazy } from 'react'
+import { LaunchScreen } from '@/view/components/LaunchScreen';
 
 const Login = lazy(()=> import('../view/pages/Login'))
 const Register = lazy(() => import('../view/pages/Register'));
@@ -21,7 +22,7 @@ export const Router = () => {
   // return useRouter
 
   return (
-    <Suspense fallback={<div className='w-10 h-10 rounded-full border-r-teal-900 border-4 animate-spin'/>}>
+    <Suspense fallback={<LaunchScreen isLoading/>}>
       <BrowserRouter>
         <Routes>
           {/* defining a layout for public routes */}

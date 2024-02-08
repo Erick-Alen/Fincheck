@@ -10,6 +10,9 @@ export const useTransactionsController = () => {
   return {
     sliderState,
     setSliderState,
-    windowWidth
+    windowWidth,
+    isInitialLoading: false,
+    isLoading: false,
+    transactions: [],
   }
 }

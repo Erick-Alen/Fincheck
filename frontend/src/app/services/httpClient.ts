@@ -19,6 +19,6 @@ httpClient.interceptors.request.use(async config => {
 
 })
 httpClient.interceptors.response.use(async data => {
-  await sleep(1500)
+  // await sleep(1500)
   return data;
 })

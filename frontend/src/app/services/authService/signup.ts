@@ -11,7 +11,7 @@ type SignUpResponse = {
 }
 
 export const signup = async (params: SignUpRequest) => {
-  await sleep()
+  // await sleep()
   const { data } = await httpClient.post<SignUpResponse>('/auth/signup', params)
   return data;
 }

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     // open a browser window automatically
-    // open: true
+    open: false,
     port: 3000,
     // change the localhost url to another:
     // linux: sudo su

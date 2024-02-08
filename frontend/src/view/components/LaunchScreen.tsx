@@ -10,7 +10,7 @@ export const LaunchScreen = ({ isLoading }: LaunchScreenProps) => {
   return (
     <Transition
       show={isLoading}
-      enter='transition-opacity duration-100'
+      enter='transition-opacity duration-200'
       enterFrom='opacity-0'
       enterTo='opacity-100'
       leave='transition-opacity duration-300'
