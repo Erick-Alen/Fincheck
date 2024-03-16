@@ -10,6 +10,9 @@ import {
 type DashboardContextProps = {
   valuesVisible: boolean | undefined;
   toggleValuesVisible: () => void;
+  isNewAccountModalOpen: boolean | undefined;
+  openNewAccountModal: () => void;
+  closeNewAccountModal: () => void;
 };
 
 export const DashboardContext = createContext({} as DashboardContextProps);
@@ -23,6 +26,13 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   );
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState<boolean | undefined>(false);
+  const openNewAccountModal = useCallback(() => {
+    setIsNewAccountModalOpen(true)
+  }, [])
+  const closeNewAccountModal = useCallback(() => {
+    setIsNewAccountModalOpen(false)
+  }, [])
   const toggleValuesVisible = useCallback(() => {
     setValuesVisible((prev) => !prev);
     localStorage.setItem(
@@ -42,6 +52,9 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       value={{
         valuesVisible,
         toggleValuesVisible,
+        isNewAccountModalOpen,
+        openNewAccountModal,
+        closeNewAccountModal,
       }}
     >
       {children}

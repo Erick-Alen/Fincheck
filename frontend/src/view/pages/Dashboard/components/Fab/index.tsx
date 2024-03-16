@@ -3,12 +3,14 @@ import { BankAccountIcon } from '@/view/components/icons/BankAccountIcon';
 import { TransactionsIcon } from '@/view/components/icons/TransactionsIcon';
 import { CategoryIcon } from '@/view/components/icons/categories/CategoryIcon';
 import { PlusIcon } from '@radix-ui/react-icons';
+import { useDashboard } from '../DashboardContext/useDashboardContext';
 
 export const Fab = () => {
+  const { openNewAccountModal } = useDashboard();
   return (
     <div className='fixed right-4 bottom-4'>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger >
+        <DropdownMenu.Trigger>
           <button className='flex justify-center items-center bg-teal-900 text-white w-12 h-12 rounded-full'>
             <PlusIcon className=' w-6 h-6 ' />
           </button>
@@ -26,7 +28,7 @@ export const Fab = () => {
             <TransactionsIcon color />
             Nova Transação
           </DropdownMenu.Item>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item onClick={openNewAccountModal}>
             <BankAccountIcon />
             Nova Conta
           </DropdownMenu.Item>

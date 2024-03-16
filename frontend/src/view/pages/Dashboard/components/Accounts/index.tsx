@@ -18,8 +18,11 @@ export const Accounts = () => {
     toggleValuesVisible,
     valuesVisible,
     isLoading,
+    openNewAccountModal,
     accounts,
+    isNewAccountModalOpen,
   } = useAccountsController();
+  console.log(isNewAccountModalOpen);
   return (
     <div className='bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col'>
       {isLoading && (
@@ -57,7 +60,11 @@ export const Accounts = () => {
                     Minhas contas
                   </strong>
                 </div>
-                <button className='flex flex-col items-center justify-center gap-4 text-white mt-4 h-52 border-teal-600 border-2 border-dashed rounded-2xl'>
+                <button
+                  className='flex flex-col items-center justify-center gap-4
+                  text-white mt-4 h-52 border-teal-600 border-2 border-dashed rounded-2xl'
+                  onClick={openNewAccountModal}
+                >
                   <div className='flex justify-center items-center h-12 w-12 rounded-full border-2 border-dashed border-white'>
                     <PlusIcon className='w-6 h-6' />
                   </div>

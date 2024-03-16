@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 export const useTransactionsController = () => {
   const windowWidth = useWindowWidth();
-  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(true)
+  const [isFiltersModalOpen, setIsFiltersModalOpen] = useState<boolean>(false)
 
   const handleOpenFiltersModal = () => {
     setIsFiltersModalOpen(true)
