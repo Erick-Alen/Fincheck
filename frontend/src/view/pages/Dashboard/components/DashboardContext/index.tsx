@@ -10,7 +10,7 @@ import {
 type DashboardContextProps = {
   valuesVisible: boolean | undefined;
   toggleValuesVisible: () => void;
-  isNewAccountModalOpen: boolean | undefined;
+  isNewAccountModalOpen: boolean;
   openNewAccountModal: () => void;
   closeNewAccountModal: () => void;
 };
@@ -26,7 +26,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   );
-  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState<boolean | undefined>(false);
+  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState<boolean>(false);
   const openNewAccountModal = useCallback(() => {
     setIsNewAccountModalOpen(true)
   }, [])
