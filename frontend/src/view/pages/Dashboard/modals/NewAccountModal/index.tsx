@@ -3,6 +3,7 @@ import { useNewAccountModalController } from './useNewAccountModalController';
 import InputCurrency from '@/view/components/InputCurrency';
 import { Input } from '@/view/components/Input';
 import { Select } from '@/view/components/Select';
+import ColorsDropdownInput from '@/view/components/ColorsDropdownInput';
 
 const NewAccountModal = () => {
   const { isNewAccountModalOpen, closeNewAccountModal } =
@@ -41,6 +42,7 @@ const NewAccountModal = () => {
               },
             ]}
           />
+          <ColorsDropdownInput/>
         </div>
       </form>
     </Modal>

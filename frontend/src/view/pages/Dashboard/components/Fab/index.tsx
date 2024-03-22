@@ -6,7 +6,7 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import { useDashboard } from '../DashboardContext/useDashboardContext';
 
 export const Fab = () => {
-  const { openNewAccountModal } = useDashboard();
+  const { openNewAccountModal, openNewTransactionModal } = useDashboard();
   return (
     <div className='fixed right-4 bottom-4'>
       <DropdownMenu.Root>
@@ -16,18 +16,18 @@ export const Fab = () => {
           </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.PortalContent className='gap-2'>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item onClick={() => openNewTransactionModal('EXPENSE')}>
             <CategoryIcon type='expense' />
             Nova Despesa
           </DropdownMenu.Item>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item onClick={() => openNewTransactionModal('INCOME')}>
             <CategoryIcon type='income' />
             Nova Receita
           </DropdownMenu.Item>
-          <DropdownMenu.Item>
+          {/* <DropdownMenu.Item>
             <TransactionsIcon color />
             Nova Transação
-          </DropdownMenu.Item>
+          </DropdownMenu.Item> */}
           <DropdownMenu.Item onClick={openNewAccountModal}>
             <BankAccountIcon />
             Nova Conta

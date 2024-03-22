@@ -5,6 +5,7 @@ import { Transactions } from './components/Transactions/index.tsx';
 import { DashboardProvider } from './components/DashboardContext/index.tsx';
 import { Fab } from './components/Fab/index.tsx';
 import NewAccountModal from './modals/NewAccountModal/index.tsx';
+import NewTransactionModal from './modals/NewTransactionModal/index.tsx';
 
 const Dashboard = () => {
   return (
@@ -25,7 +26,8 @@ const Dashboard = () => {
           </div>
         </main>
         <Fab />
-        <NewAccountModal/>
+        <NewAccountModal />
+        <NewTransactionModal />
       </div>
     </DashboardProvider>
   );

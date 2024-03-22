@@ -45,7 +45,7 @@ export const Select = ({
         <RdxSelect.Root onValueChange={handleSelect}>
           <RdxSelect.Trigger
             className={cn(
-              'w-full bg-white rounded-lg border border-gray-500 text-gray-80 p-3 h-[52px] placeholder-shown:pt-0 focus:outline-slate-600 transition-all text-left relative pt-5',
+              'w-full bg-white rounded-lg border border-gray-500 text-gray-800 p-3 h-[52px] placeholder-shown:pt-0 focus:outline-slate-600 transition-all text-left relative pt-5',
               error && '!border-red-500 ! focus: !outline-red-500',
               className
             )}

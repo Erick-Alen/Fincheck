@@ -13,6 +13,10 @@ type DashboardContextProps = {
   isNewAccountModalOpen: boolean;
   openNewAccountModal: () => void;
   closeNewAccountModal: () => void;
+  isNewTransactionModalOpen: boolean;
+  openNewTransactionModal: (type: 'INCOME' | 'EXPENSE') => void;
+  closeNewTransactionModal: () => void;
+  newTransactionType: 'INCOME' | 'EXPENSE' | null;
 };
 
 export const DashboardContext = createContext({} as DashboardContextProps);
@@ -27,6 +31,22 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     }
   );
   const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState<boolean>(false);
+  const [
+    isNewTransactionModalOpen,
+    setIsNewTransactionModalOpen,
+  ] = useState<boolean>(false);
+  const [newTransactionType, setNewTransactionType] = useState<
+    'INCOME' | 'EXPENSE' | null
+  >(null);
+  const openNewTransactionModal = useCallback((type: 'INCOME' | 'EXPENSE') => {
+    setIsNewTransactionModalOpen(true)
+    setNewTransactionType(type);
+  }, [])
+  const closeNewTransactionModal = useCallback(() => {
+    setIsNewTransactionModalOpen(false);
+    setNewTransactionType(null);
+  }, []);
+
   const openNewAccountModal = useCallback(() => {
     setIsNewAccountModalOpen(true)
   }, [])
@@ -55,6 +75,10 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
         isNewAccountModalOpen,
         openNewAccountModal,
         closeNewAccountModal,
+        isNewTransactionModalOpen,
+        openNewTransactionModal,
+        closeNewTransactionModal,
+        newTransactionType,
       }}
     >
       {children}
