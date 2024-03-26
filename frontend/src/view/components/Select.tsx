@@ -15,6 +15,8 @@ type SelectProps = {
     value: string;
     label: string;
   }[];
+  value?: string;
+  onChange?(value: string): void;
 };
 
 export const Select = ({
@@ -22,11 +24,14 @@ export const Select = ({
   error,
   placeholder,
   options,
+  onChange,
+  value
 }: SelectProps) => {
-  const [selectedValue, setSelectedValue] = useState<string>('');
+  const [selectedValue, setSelectedValue] = useState(value);
 
   const handleSelect = (value: string) => {
     setSelectedValue(value);
+    onChange?.(value)
   };
   return (
     <div>
@@ -42,7 +47,7 @@ export const Select = ({
         >
           {placeholder}
         </label>
-        <RdxSelect.Root onValueChange={handleSelect}>
+        <RdxSelect.Root value={value} onValueChange={handleSelect}>
           <RdxSelect.Trigger
             className={cn(
               'w-full bg-white rounded-lg border border-gray-500 text-gray-800 p-3 h-[52px] placeholder-shown:pt-0 focus:outline-slate-600 transition-all text-left relative pt-5',
