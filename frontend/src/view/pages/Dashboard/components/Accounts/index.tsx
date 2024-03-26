@@ -66,7 +66,9 @@ export const Accounts = () => {
                   <div className='flex justify-center items-center h-12 w-12 rounded-full border-2 border-dashed border-white'>
                     <PlusIcon className='w-6 h-6' />
                   </div>
-                  <span className='text-lg font-medium tracking-[-0.5px] block w-32'>Cadastre uma nova conta</span>
+                  <span className='text-lg font-medium tracking-[-0.5px] block w-32'>
+                    Cadastre uma nova conta
+                  </span>
                 </button>
               </>
             )}
@@ -94,30 +96,16 @@ export const Accounts = () => {
                       isEnd={sliderState.isEnd}
                     />
                   </div>
-                  <SwiperSlide>
-                  <AccountCard
-                    balance={1400.0}
-                    color='#7950f2'
-                    name='Nubank'
-                    type='CASH'
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <AccountCard
-                    balance={600}
-                    color='#353535'
-                    name='XP'
-                    type='INVESTMENT'
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <AccountCard
-                    balance={600}
-                    color='#9c0000'
-                    name='Market'
-                    type='CHECKING'
-                  />
-                </SwiperSlide>
+                  {accounts.map((account) => (
+                    <SwiperSlide key={account.id}>
+                      <AccountCard
+                        balance={account.currentBalance}
+                        color={account.color}
+                        name={account.name}
+                        type={account.type}
+                      />
+                    </SwiperSlide>
+                  ))}
                 </Swiper>
               </div>
             )}

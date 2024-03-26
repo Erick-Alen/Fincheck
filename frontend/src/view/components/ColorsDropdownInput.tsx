@@ -33,8 +33,18 @@ const colors: Color[] = [
   { color: '#212529', bg: '#F8F9FA' },
 ];
 
-const ColorsDropdownInput = ({ className, error, onChange, value }: ColorsDropdownInputProps) => {
-  const [selectedColor, setSelectedColor] = useState<Color | null>(null);
+export const ColorsDropdownInput = ({
+  className,
+  error,
+  onChange,
+  value,
+}: ColorsDropdownInputProps) => {
+  const [selectedColor, setSelectedColor] = useState<Color | null>(() => {
+    if (!value) {
+      return null;
+    }
+    return colors.find((c) => c.color === value) ?? null;
+  });
   const handleSelect = (color: Color) => {
     setSelectedColor(color);
     onChange?.(color.color);
@@ -46,7 +56,7 @@ const ColorsDropdownInput = ({ className, error, onChange, value }: ColorsDropdo
           <button
             className={cn(
               'w-full bg-white rounded-lg border border-gray-500 text-gray-700 p-3 h-[52px] placeholder-shown:pt-0 focus:outline-slate-600 transition-all text-left relative',
-              error && '!border-red-500 ! focus: !outline-red-500',
+              error && '!border-red-500 ! focus:!outline-red-500',
               className
             )}
           >
@@ -81,5 +91,3 @@ const ColorsDropdownInput = ({ className, error, onChange, value }: ColorsDropdo
     </div>
   );
 };
-
-export default ColorsDropdownInput;

@@ -3,7 +3,7 @@ import { useNewAccountModalController } from './useNewAccountModalController';
 
 import { Input } from '@/view/components/Input';
 import { Select } from '@/view/components/Select';
-import ColorsDropdownInput from '@/view/components/ColorsDropdownInput';
+import { ColorsDropdownInput } from '@/view/components/ColorsDropdownInput';
 import { Button } from '@/view/components/Button';
 import { Controller } from 'react-hook-form';
 import { InputCurrency } from '@/view/components/InputCurrency';
@@ -16,9 +16,14 @@ const NewAccountModal = () => {
     control,
     errors,
     onSubmit,
+    isPending,
   } = useNewAccountModalController();
   return (
-    <Modal title='Nova Conta' open={true} onClose={closeNewAccountModal}>
+    <Modal
+      title='Nova Conta'
+      open={isNewAccountModalOpen}
+      onClose={closeNewAccountModal}
+    >
       <form onSubmit={onSubmit}>
         <div className='mt-10 flex flex-col gap-4'>
           <span className='text-gray-600 tracking-[0.5px] text-xs'>Saldo</span>
@@ -34,7 +39,7 @@ const NewAccountModal = () => {
               )}
               name='initialBalance'
               control={control}
-              defaultValue='0'
+              // defaultValue='0'
             />
           </div>
         </div>
@@ -77,11 +82,15 @@ const NewAccountModal = () => {
             defaultValue=''
             control={control}
             render={({ field: { onChange, value } }) => (
-              <ColorsDropdownInput onChange={onChange} value={value} error={errors.color?.message} />
+              <ColorsDropdownInput
+                onChange={onChange}
+                value={value}
+                error={errors.color?.message}
+              />
             )}
           />
         </div>
-        <Button type='submit' className='w-full mt-6'>
+        <Button isPending={isPending} type='submit' className='w-full mt-6'>
           Criar
         </Button>
       </form>

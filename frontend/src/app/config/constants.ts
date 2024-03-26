@@ -11,4 +11,8 @@ export const MONTHS = [
     'Out',
     'Nov',
     'Dez',
-  ]
+]
+
+export const QUERY_KEYS = {
+  ACCOUNTS: 'accounts',
+}
