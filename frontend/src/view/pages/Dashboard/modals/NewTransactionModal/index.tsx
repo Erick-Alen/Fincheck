@@ -1,6 +1,6 @@
 import { Modal } from '@/view/components/Modal';
 import { useNewTransactionModalController } from './useNewTransactionModalController';
-import InputCurrency from '@/view/components/InputCurrency';
+import { InputCurrency } from '@/view/components/InputCurrency';
 import { Input } from '@/view/components/Input';
 import { Select } from '@/view/components/Select';
 import { DatePickerInput } from '@/view/components/DatePickerInput';
