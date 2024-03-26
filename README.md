@@ -20,7 +20,7 @@ Recursos incluídos neste repositório:
 - [React](https://reactjs.org/): A library built with focus on building web interfaces from Javascript components.
 
 ## Installation <a name="install" />
-You'll need to install nodeJS to run this applciation. Node is a cross-platform, open-source JavaScript runtime environment that can run on Windows, Linux, Unix, macOS, and etc. You can download the latest version on the [Offical Site](https://nodejs.org/en/download). It'as recommended to download the latest version maked as `LTS (Long Term Support)`.
+You'll need to install nodeJS to run this application. Node is a cross-platform, open-source JavaScript runtime environment that can run on Windows, Linux, Unix, macOS, and etc. You can download the latest version on the [Offical Site](https://nodejs.org/en/download). It'as recommended to download the latest version maked as `LTS (Long Term Support)`.
 
 After that, it will be required for you to have a database to keep al the data in memory. The easier way to make it is Using [Docker](https://docs.docker.com/get-docker/). Docker is a engine container that runs vrtual machines `(VMs)` from your computer kernel, making it easier to create and execute applications using containers. This assures you that the application running inside this isolated environment will not be affected by any version changes in your operational system, as well as making it easier to manage and scale these applications.
 
