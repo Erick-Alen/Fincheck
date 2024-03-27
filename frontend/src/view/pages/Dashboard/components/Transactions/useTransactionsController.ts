@@ -1,3 +1,4 @@
+import { useTransactions } from '@/app/hooks/useTransactions';
 import { useWindowWidth } from '@/app/hooks/useWindowWidth'
 import { useState } from 'react'
 
@@ -16,15 +17,18 @@ export const useTransactionsController = () => {
     isBeginning: true,
     isEnd: false,
   })
+
+  const { transactions, isPending, isLoading } = useTransactions();
+
   return {
     sliderState,
     setSliderState,
     windowWidth,
-    isInitialLoading: false,
-    isLoading: false,
-    transactions: [],
+    isLoading,
+    transactions,
     isFiltersModalOpen,
     handleOpenFiltersModal,
-    handleCloseFiltersModal
+    handleCloseFiltersModal,
+    isPending,
   }
 }
