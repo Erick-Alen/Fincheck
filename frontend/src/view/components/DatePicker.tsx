@@ -8,7 +8,7 @@ interface DatePickerProps {
   onChange(date: Date): void;
 }
 
-export function DatePicker({ value, onChange }: DatePickerProps) {
+export const DatePicker = ({ value, onChange }: DatePickerProps) => {
   return (
     <DayPicker
       locale={ptBR}

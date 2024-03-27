@@ -1,4 +1,4 @@
-export function BankAccountIcon() {
+export const BankAccountIcon = () => {
   return (
     <svg
       width='44'

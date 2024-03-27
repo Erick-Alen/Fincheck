@@ -1,4 +1,3 @@
-import { ChooseiconColor } from '@/app/utils/ChooseiconColor';
 import { IconProps } from './IncomeIcon';
 
 export function ExpensesIcon(color: IconProps) {
