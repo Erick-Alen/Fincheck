@@ -2,14 +2,16 @@ import { cn } from '../../app/utils/cn';
 
 type SpinnerProps = {
   className?: string;
+  danger?: boolean
 }
 
-export const Spinner = ({ className }: SpinnerProps) => {
+export const Spinner = ({ className, danger }: SpinnerProps) => {
   return (
     <svg
       aria-hidden='true'
       className={cn(
         'w-8 h-8 text-gray-300 animate-spin fill-teal-800',
+        danger && 'fill-red-800',
         className
       )}
       viewBox='0 0 100 101'

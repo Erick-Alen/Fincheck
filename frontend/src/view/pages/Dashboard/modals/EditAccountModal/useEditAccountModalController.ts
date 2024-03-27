@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { bankAccountsService } from '@/app/services/bankAccountService';
 import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 const schema = z.object({
   name: z.string().min(1, 'Account name is mandatory'),
@@ -22,6 +23,7 @@ type FormData =z.infer<typeof schema>
 export function useEditAccountModalController () {
   const { isEditAccountModalOpen, closeEditAccountModal, accountBeingEdited } = useDashboard();
 
+  //REACT HOOK FORM DATA
   const {
     register,
     control,
@@ -38,30 +40,67 @@ export function useEditAccountModalController () {
     }
   })
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
 
+  //EDIT ACCOUNT MUTATION
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending } = useMutation({mutationFn: bankAccountsService.update}) // tanstack-v5
+  const { mutateAsync: updateAccount, isPending: isPendingUpdateAccount } = useMutation({mutationFn: bankAccountsService.update}) // tanstack-v5
   // const { mutateAsync } = useMutation(bankAccountsService.create) tanstack-v4
-    const onSubmit = handleSubmit(async (data) => {
-      try {
-        mutateAsync({
-          ...data,
-          initialBalance: currencyStringToNumber(data.initialBalance),
-          id: accountBeingEdited!.id
-          // typescript non null assertion operator
-          // enforcing that the value is not null or undefined
-        })
 
-        toast.success('Account updated successfully');
-        // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
-        queryClient.invalidateQueries({queryKey: ['bankAccounts']})
-        closeEditAccountModal();
-        reset();
-        // not necessary, component is being unmounted
-      } catch {
-        toast.error('Error updating account')
-      }
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      updateAccount({
+        ...data,
+        initialBalance: currencyStringToNumber(data.initialBalance),
+        id: accountBeingEdited!.id
+        // typescript non null assertion operator
+        // enforcing that the value is not null or undefined
+      })
+      toast.success('Account updated successfully');
+      // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
+      reset();
+      //TODO: fix react query invalidate queries
+      queryClient.invalidateQueries({queryKey: ['bankAccounts']})
+      closeEditAccountModal();
+      // not necessary, component is being unmounted
+    } catch {
+      toast.error('Error updating account')
+    }
   });
 
-  return { isEditAccountModalOpen, closeEditAccountModal, accountBeingEdited, register, control, errors, onSubmit, isPending };
+
+  const handleOpenDeleteModal = async () => {
+    setIsDeleteModalOpen(true)
+  }
+  const handleCloseDeleteModal = async () => {
+    setIsDeleteModalOpen(false)
+  }
+  const { mutateAsync: removeAccount, isPending: isPendingDeleteAccount } = useMutation({mutationFn: bankAccountsService.remove}) // tanstack-v5
+  const handleDeleteAccount = async () => {
+    try {
+      removeAccount(accountBeingEdited!.id)
+      // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
+      queryClient.invalidateQueries({queryKey: ['bankAccounts']})
+      closeEditAccountModal();
+      toast.success('Account deleted successfully');
+    } catch {
+      toast.error('Error deleting account')
+    }
+  }
+
+  return {
+    isEditAccountModalOpen,
+    closeEditAccountModal,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteAccount,
+    isDeleteModalOpen,
+    accountBeingEdited,
+    register,
+    control,
+    errors,
+    onSubmit,
+    isPendingUpdateAccount,
+    isPendingDeleteAccount
+  };
 }
