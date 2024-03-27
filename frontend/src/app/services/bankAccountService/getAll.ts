@@ -1,13 +1,7 @@
+import { BankAccount } from '@/app/entities/BankAccount';
 import { httpClient } from '../httpClient';
 
-type BankAccountsResponse = Array<{
-  color: string,
-  name: string,
-  id: string,
-  initialBalance: number,
-  currentBalance: number,
-  type: 'CHECKING' | 'INVESTMENT' | 'CASH'
-  }>
+type BankAccountsResponse = Array<BankAccount>
 
 export const getAll = async () => {
   // await sleep()

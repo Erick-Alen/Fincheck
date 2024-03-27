@@ -20,6 +20,8 @@ export const Accounts = () => {
     isLoading,
     openNewAccountModal,
     accounts,
+    currentBalance,
+    openEditAccountModal
   } = useAccountsController();
   return (
     <div className='bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col'>
@@ -40,7 +42,7 @@ export const Accounts = () => {
                 !valuesVisible && 'blur-md transition-all'
               )}
             >
-              {formatCurrency(0.5)}
+              {formatCurrency(currentBalance)}
             </strong>
             <button
               onClick={toggleValuesVisible}
@@ -99,10 +101,7 @@ export const Accounts = () => {
                   {accounts.map((account) => (
                     <SwiperSlide key={account.id}>
                       <AccountCard
-                        balance={account.currentBalance}
-                        color={account.color}
-                        name={account.name}
-                        type={account.type}
+                        data={account}
                       />
                     </SwiperSlide>
                   ))}
