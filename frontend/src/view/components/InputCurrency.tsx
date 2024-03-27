@@ -12,6 +12,7 @@ export const InputCurrency = ({ error, onChange, value }: InputCurrencyProps) =>
   return (
     <div>
       <NumericFormat
+        decimalSeparator=','
         thousandSeparator='.'
         className={cn(
           'w-full text-gray-800 text-[32px] font-bold tracking-[1px] outline-none',
