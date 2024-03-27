@@ -16,8 +16,8 @@ export const Fab = () => {
           </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.PortalContent className='gap-2'>
-          <DropdownMenu.Item onClick={() => openNewTransactionModal('EXPENSE')}>
-            <CategoryIcon type='expense' />
+          <DropdownMenu.Item onClick={() => openNewTransactionModal('OUTCOME')}>
+            <CategoryIcon type='outcome' />
             Nova Despesa
           </DropdownMenu.Item>
           <DropdownMenu.Item onClick={() => openNewTransactionModal('INCOME')}>

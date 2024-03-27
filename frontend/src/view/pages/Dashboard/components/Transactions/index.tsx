@@ -99,7 +99,7 @@ export const Transactions = () => {
               <>
                 <div className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4'>
                   <div className='flex items-center gap-3 flex-1'>
-                    <CategoryIcon type='expense' />
+                    <CategoryIcon type='outcome' />
                     <div>
                       <strong className='font-bold tracking-[-0.5px] block'>
                         Armozo
