@@ -20,38 +20,43 @@ export const Transactions = () => {
   const {
     setSliderState,
     sliderState,
-    isLoading,
     transactions,
     handleCloseFiltersModal,
     handleOpenFiltersModal,
     isFiltersModalOpen,
-    isPending
+    isPending,
+    isFetching,
+    handleChangeMonth,
+    filters,
   } = useTransactionsController();
   const hasTransactions = transactions.length > 0;
   const { valuesVisible } = useDashboard();
+
   return (
     <div className='bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col'>
       <FiltersModal
         open={isFiltersModalOpen}
         onClose={handleCloseFiltersModal}
       />
-      {isLoading && (
+      {isPending && (
         <div className='h-full w-full flex items-center justify-center'>
           <Spinner className='w-10 h-10' />
         </div>
       )}
-      {!isLoading && (
+      {!isPending && (
         <>
           <header>
             <Swiper
               spaceBetween={16}
               slidesPerView={3.2}
+              initialSlide={filters.month}
               centeredSlides
               onSlideChange={(swiper) => {
-                setSliderState({
-                  isBeginning: swiper.isBeginning,
-                  isEnd: swiper.isEnd,
-                });
+                handleChangeMonth(swiper.realIndex);
+                // setSliderState({
+                //   isBeginning: swiper.isBeginning,
+                //   isEnd: swiper.isEnd,
+                // });
               }}
             >
               <div
@@ -85,9 +90,11 @@ export const Transactions = () => {
             </Swiper>
           </header>
           <div className='mt-4 space-y-2 flex-1 overflow-y-auto'>
-            {isPending && <Spinner className='w-10 h-10' />}
+            {isFetching && (
+              <Spinner className='w-10 h-10 relative top-1/2 left-1/2' />
+            )}
 
-            {!hasTransactions && !isPending && (
+            {!hasTransactions && !isFetching && (
               <div className='w-full h-full flex flex-col items-center justify-center'>
                 <img
                   src={emptyStateImagef}
@@ -99,42 +106,42 @@ export const Transactions = () => {
               </div>
             )}
 
-            {hasTransactions && !isPending && (
-                transactions.map((transaction) => (
-                  <div
-                    key={transaction.id}
-                    className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4'
-                  >
-                    <div className='flex items-center gap-3 flex-1'>
-                      <CategoryIcon
-                        type={
-                          transaction.type.toLowerCase() as 'income' | 'outcome'
-                        }
-                        category={transaction.category?.icon}
-                      />
-                      <div>
-                        <strong className='font-bold tracking-[-0.5px] block'>
-                          {transaction.name}
-                        </strong>
-                        <span className='text-sm text-gray-600'>
-                          {formatDate(new Date(transaction.date))}
-                        </span>
-                      </div>
+            {hasTransactions &&
+              !isFetching &&
+              transactions.map((transaction) => (
+                <div
+                  key={transaction.id}
+                  className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4'
+                >
+                  <div className='flex items-center gap-3 flex-1'>
+                    <CategoryIcon
+                      type={
+                        transaction.type.toLowerCase() as 'income' | 'outcome'
+                      }
+                      category={transaction.category?.icon}
+                    />
+                    <div>
+                      <strong className='font-bold tracking-[-0.5px] block'>
+                        {transaction.name}
+                      </strong>
+                      <span className='text-sm text-gray-600'>
+                        {formatDate(new Date(transaction.date))}
+                      </span>
                     </div>
-                    <span
-                      className={cn(
-                        'font-medium tracking-[-0.5px]',
-                        transaction.type === 'INCOME' && 'text-green-800',
-                        transaction.type === 'OUTCOME' && 'text-red-800',
-                        !valuesVisible && 'blur-sm transition-all'
-                      )}
-                    >
-                      {transaction.type === 'INCOME' ? '+' : '-'}
-                      {formatCurrency(transaction.value)}
-                    </span>
                   </div>
-                ))
-            )}
+                  <span
+                    className={cn(
+                      'font-medium tracking-[-0.5px]',
+                      transaction.type === 'INCOME' && 'text-green-800',
+                      transaction.type === 'OUTCOME' && 'text-red-800',
+                      !valuesVisible && 'blur-sm transition-all'
+                    )}
+                  >
+                    {transaction.type === 'INCOME' ? '+' : '-'}
+                    {formatCurrency(transaction.value)}
+                  </span>
+                </div>
+              ))}
           </div>
         </>
       )}

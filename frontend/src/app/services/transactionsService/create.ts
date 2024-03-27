@@ -11,6 +11,6 @@ export type CreateTransactionsParams = {
 
 export const create = async (params: CreateTransactionsParams) => {
   // await sleep()
-  const { data } = await httpClient.post('/Transactions', params);
+  const { data } = await httpClient.post('/transactions', params);
   return data;
 }
