@@ -14,29 +14,33 @@ import { Spinner } from '@/view/components/Spinner';
 import emptyStateImagef from '@/assets/images/empty-state.svg';
 import { TransactionTypeDropdown } from './TransactionTypeDropdown';
 import { FiltersModal } from './FiltersModal';
+import { formatDate } from '@/app/utils/formatDate';
 
 export const Transactions = () => {
   const {
     setSliderState,
     sliderState,
     isLoading,
-    isInitialLoading,
     transactions,
     handleCloseFiltersModal,
     handleOpenFiltersModal,
-    isFiltersModalOpen
+    isFiltersModalOpen,
+    isPending
   } = useTransactionsController();
   const hasTransactions = transactions.length > 0;
   const { valuesVisible } = useDashboard();
   return (
     <div className='bg-gray-100 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col'>
-      <FiltersModal open={isFiltersModalOpen} onClose={handleCloseFiltersModal} />
-      {isInitialLoading && (
+      <FiltersModal
+        open={isFiltersModalOpen}
+        onClose={handleCloseFiltersModal}
+      />
+      {isLoading && (
         <div className='h-full w-full flex items-center justify-center'>
           <Spinner className='w-10 h-10' />
         </div>
       )}
-      {!isInitialLoading && (
+      {!isLoading && (
         <>
           <header>
             <Swiper
@@ -81,9 +85,9 @@ export const Transactions = () => {
             </Swiper>
           </header>
           <div className='mt-4 space-y-2 flex-1 overflow-y-auto'>
-            {isLoading && <Spinner className='w-10 h-10' />}
+            {isPending && <Spinner className='w-10 h-10' />}
 
-            {!hasTransactions && !isLoading && (
+            {!hasTransactions && !isPending && (
               <div className='w-full h-full flex flex-col items-center justify-center'>
                 <img
                   src={emptyStateImagef}
@@ -95,47 +99,41 @@ export const Transactions = () => {
               </div>
             )}
 
-            {hasTransactions && !isLoading && (
-              <>
-                <div className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4'>
-                  <div className='flex items-center gap-3 flex-1'>
-                    <CategoryIcon type='outcome' />
-                    <div>
-                      <strong className='font-bold tracking-[-0.5px] block'>
-                        Armozo
-                      </strong>
-                      <span className='text-sm text-gray-600'>04/06/2023</span>
-                    </div>
-                  </div>
-                  <span
-                    className={cn(
-                      'font-medium text-red-800 tracking-[-0.5px]',
-                      !valuesVisible && 'blur-sm transition-all'
-                    )}
+            {hasTransactions && !isPending && (
+                transactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4'
                   >
-                    {formatCurrency(-1400.0)}
-                  </span>
-                </div>
-                <div className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4'>
-                  <div className='flex items-center gap-3 flex-1'>
-                    <CategoryIcon type='income' />
-                    <div>
-                      <strong className='font-bold tracking-[-0.5px] block'>
-                        Salário
-                      </strong>
-                      <span className='text-sm text-gray-600'>04/06/2023</span>
+                    <div className='flex items-center gap-3 flex-1'>
+                      <CategoryIcon
+                        type={
+                          transaction.type.toLowerCase() as 'income' | 'outcome'
+                        }
+                        category={transaction.category?.icon}
+                      />
+                      <div>
+                        <strong className='font-bold tracking-[-0.5px] block'>
+                          {transaction.name}
+                        </strong>
+                        <span className='text-sm text-gray-600'>
+                          {formatDate(new Date(transaction.date))}
+                        </span>
+                      </div>
                     </div>
+                    <span
+                      className={cn(
+                        'font-medium tracking-[-0.5px]',
+                        transaction.type === 'INCOME' && 'text-green-800',
+                        transaction.type === 'OUTCOME' && 'text-red-800',
+                        !valuesVisible && 'blur-sm transition-all'
+                      )}
+                    >
+                      {transaction.type === 'INCOME' ? '+' : '-'}
+                      {formatCurrency(transaction.value)}
+                    </span>
                   </div>
-                  <span
-                    className={cn(
-                      'font-medium text-green-800 tracking-[-0.5px]',
-                      !valuesVisible && 'blur-sm transition-all'
-                    )}
-                  >
-                    {formatCurrency(1400.0)}
-                  </span>
-                </div>
-              </>
+                ))
             )}
           </div>
         </>
