@@ -3,5 +3,5 @@ import { update } from './update';
 import { getAll } from './getAll';
 import { create } from './create'
 export const transactionsService = {
-  create, getAll
+  create, getAll, update, remove
 }

@@ -23,8 +23,11 @@ const schema = z.object({
   date: z.date()
 })
 
-export const useEditTransactionModalController = (transaction: Transaction | null) => {
-  // typing the react hok forma formdata
+export const useEditTransactionModalController = (
+    transaction: Transaction | null,
+    onClose: () => void,
+  ) => {
+  // typing the react hoOk form formdata
   type FormData = z.infer<typeof schema>
 
     // creating the REACT HOOK FORM
@@ -32,7 +35,6 @@ export const useEditTransactionModalController = (transaction: Transaction | nul
     register,
     control,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -51,27 +53,28 @@ export const useEditTransactionModalController = (transaction: Transaction | nul
     return categoriesList.filter(category => category.type === transaction?.type)
   }, [categoriesList, transaction])
 
-  // const { isPending, mutateAsync } = useMutation({ mutationFn: transactionsService.create }) // tanstack-v5
+  const { isPending, mutateAsync } = useMutation({ mutationFn: transactionsService.update }) // tanstack-v5
 
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   // const { mutateAsync: updateAccount, isPending: isPendingUpdateAccount } = useMutation({mutationFn: bankAccountsService.create}) // tanstack-v5
 
   const onSubmit = handleSubmit(async data => {
-    // try {
-    //   mutateAsync({
-    //     ...data,
-    //     value: currencyStringToNumber(data.value),
-    //     type: newTransactionType!,
-    //     date: data.date.toISOString(),
-    //   })
-    //   toast.success('Transaction created successfully');
-    //   // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TRANSACTIONS]})
-    //   queryClient.invalidateQueries({ queryKey: ['transactions'] })
-    //   reset();
-    //   closeNewTransactionModal();
-    // } catch {
-    //   toast.error('Error creating transaction');
-    // }
+    console.log(data);
+    try {
+      mutateAsync({
+        ...data,
+        id: transaction!.id,
+        value: currencyStringToNumber(data.value),
+        type: transaction!.type,
+        date: data.date.toISOString(),
+      })
+      toast.success('Transaction created successfully');
+      // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TRANSACTIONS]})
+      queryClient.invalidateQueries({ queryKey: ['transactions'] })
+      onClose();
+    } catch {
+      toast.error('Error updating transaction');
+    }
 
   })
 

@@ -11,7 +11,7 @@ import { Transaction } from '@/app/entities/Transaction';
 type EditTransactionModalProps = {
   transaction: Transaction | null;
   open: boolean;
-  onClose(): void;
+  onClose: () => void;
 };
 
 export const EditTransactionModal = ({
@@ -30,7 +30,7 @@ export const EditTransactionModal = ({
     accounts,
     categories,
     isPending,
-  } = useEditTransactionModalController(transaction);
+  } = useEditTransactionModalController(transaction, onClose);
   const isIncome = transaction?.type === 'INCOME';
   return (
     <Modal
