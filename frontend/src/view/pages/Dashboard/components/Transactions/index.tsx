@@ -14,6 +14,7 @@ import { TransactionTypeDropdown } from './TransactionTypeDropdown';
 import { FiltersModal } from './FiltersModal';
 import { formatDate } from '@/app/utils/formatDate';
 import { EditTransactionModal } from '../../modals/EditTransactionModal';
+import React from 'react';
 
 export const Transactions = () => {
   const {
@@ -118,7 +119,7 @@ export const Transactions = () => {
             {hasTransactions &&
               !isFetching &&
               transactions.map((transaction) => (
-                <>
+                <React.Fragment key={transaction.id}>
                   <div
                     key={transaction.id}
                     className='bg-white p-4 rounded-2xl flex items-center justify-between gap-4 cursor-pointer hover:shadow-xl transition-shadow'
@@ -160,7 +161,7 @@ export const Transactions = () => {
                       onClose={handleCloseTransactionModal}
                     />
                   )}
-                </>
+                </React.Fragment>
               ))}
           </div>
         </>
