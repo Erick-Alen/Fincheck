@@ -8,7 +8,7 @@ import { Button } from '@/view/components/Button';
 import { Controller } from 'react-hook-form';
 import { InputCurrency } from '@/view/components/InputCurrency';
 
-const NewAccountModal = () => {
+export const NewAccountModal = () => {
   const {
     isNewAccountModalOpen,
     closeNewAccountModal,
@@ -97,5 +97,3 @@ const NewAccountModal = () => {
     </Modal>
   );
 };
-
-export default NewAccountModal;

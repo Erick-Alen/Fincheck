@@ -7,7 +7,7 @@ import { DatePickerInput } from '@/view/components/DatePickerInput';
 import { Controller } from 'react-hook-form';
 import { Button } from '@/view/components/Button';
 
-const NewTransactionModal = () => {
+export const NewTransactionModal = () => {
   const {
     isNewTransactionModalOpen,
     closeNewTransactionModal,
@@ -108,5 +108,3 @@ const NewTransactionModal = () => {
     </Modal>
   );
 };
-
-export default NewTransactionModal;

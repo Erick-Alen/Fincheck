@@ -10,7 +10,7 @@ import { InputCurrency } from '@/view/components/InputCurrency';
 import { TrashIcon } from '@/view/components/icons/TrashIcon';
 import { ConfirmDeleteModal } from '@/view/components/ConfirmDeleteModal';
 
-const EditAccountModal = () => {
+export const EditAccountModal = () => {
   const {
     isEditAccountModalOpen,
     closeEditAccountModal,
@@ -126,5 +126,3 @@ const EditAccountModal = () => {
       </Modal>
     );
 };
-
-export default EditAccountModal;
