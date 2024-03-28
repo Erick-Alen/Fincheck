@@ -57,6 +57,7 @@ export const useNewTransactionModalController = () => {
       toast.success('Transaction created successfully');
       // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TRANSACTIONS]})
       queryClient.invalidateQueries({ queryKey: ['transactions'] })
+      queryClient.invalidateQueries({ queryKey: ['bankAccounts'] })
       reset();
       closeNewTransactionModal();
     } catch {

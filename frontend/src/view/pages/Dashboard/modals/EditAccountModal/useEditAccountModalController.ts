@@ -68,7 +68,7 @@ export const useEditAccountModalController = () => {
     }
   });
 
-
+  //delete account
   const handleOpenDeleteModal = async () => {
     setIsDeleteModalOpen(true)
   }

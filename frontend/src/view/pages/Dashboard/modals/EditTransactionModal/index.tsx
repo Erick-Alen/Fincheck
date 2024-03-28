@@ -7,6 +7,8 @@ import { DatePickerInput } from '@/view/components/DatePickerInput';
 import { Controller } from 'react-hook-form';
 import { Button } from '@/view/components/Button';
 import { Transaction } from '@/app/entities/Transaction';
+import { ConfirmDeleteModal } from '@/view/components/ConfirmDeleteModal';
+import { TrashIcon } from '@/view/components/icons/TrashIcon';
 
 type EditTransactionModalProps = {
   transaction: Transaction | null;
@@ -20,23 +22,41 @@ export const EditTransactionModal = ({
   open,
 }: EditTransactionModalProps) => {
   const {
-    // isNewTransactionModalOpen,
-    // closeNewTransactionModal,
-    // newTransactionType,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+    handleDeleteTransaction,
+    isDeleteModalOpen,
     control,
     errors,
     onSubmit,
     register,
     accounts,
     categories,
-    isPending,
+    isPendingUpdateTransaction,
+    isPendingDeleteTransaction,
   } = useEditTransactionModalController(transaction, onClose);
   const isIncome = transaction?.type === 'INCOME';
+
+  if (isDeleteModalOpen) {
+    return (
+      <ConfirmDeleteModal
+        title='Are you sure you want to delete this transaction?'
+        isPending={isPendingDeleteTransaction}
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleDeleteTransaction}
+      />
+    );
+  }
   return (
     <Modal
       title={isIncome ? 'Edit Receipt' : 'Edit Expense'}
       open={open}
       onClose={onClose}
+      rightAction={
+        <button onClick={handleOpenDeleteModal}>
+          <TrashIcon className='w-6 h-6 text-red-600' />
+        </button>
+      }
     >
       <form onSubmit={onSubmit}>
         <div className='mt-10 flex flex-col gap-4'>
@@ -112,7 +132,11 @@ export const EditTransactionModal = ({
             )}
           />
         </div>
-        <Button isPending={isPending} type='submit' className='w-full mt-6'>
+        <Button
+          isPending={isPendingUpdateTransaction}
+          type='submit'
+          className='w-full mt-6'
+        >
           Save changes
         </Button>
       </form>
