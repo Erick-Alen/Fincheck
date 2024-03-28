@@ -1,5 +1,5 @@
 import { useWindowWidth } from '@/app/hooks/useWindowWidth'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDashboard } from '../DashboardContext/useDashboardContext';
 import { useQuery } from '@tanstack/react-query';
 import { bankAccountsService } from '@/app/services/bankAccountsService';
@@ -23,9 +23,9 @@ export const useAccountsController = () => {
   })
 
 
-  const { accounts, isFetching } = useBankAccounts();
+  const { accounts, isFetching, refetch } = useBankAccounts();
 
-
+  //TODO
   const currentBalance = useMemo(() => {
     return accounts.reduce((total, account) => total + account.currentBalance, 0) ?? 0
   }, [accounts])
