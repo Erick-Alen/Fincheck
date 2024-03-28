@@ -2,14 +2,7 @@ import { IconProps } from './IncomeIcon';
 
 export function TransactionsIcon({ color = false }: IconProps) {
   return (
-    <svg
-      width='24'
-      height='24'
-      viewBox='0 0 24 24'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      className='bg-[#dee3ff] rounded-full w-11 h-11 p-2 border-white border-2'
-    >
+
       <svg
         width='24'
         height='24'
@@ -25,6 +18,5 @@ export function TransactionsIcon({ color = false }: IconProps) {
           strokeLinejoin='round'
         />
       </svg>
-    </svg>
   );
 }
