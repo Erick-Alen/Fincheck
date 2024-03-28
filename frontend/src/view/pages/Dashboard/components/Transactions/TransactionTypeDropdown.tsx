@@ -4,28 +4,40 @@ import { IncomeIcon } from '@/view/components/icons/IncomeIcon';
 import { TransactionsIcon } from '@/view/components/icons/TransactionsIcon';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
-export const TransactionTypeDropdown = () => {
+type TransactionTypeDropdownProps = {
+  onClick(type: 'INCOME' | 'OUTCOME' | undefined): void;
+  selectedType: 'INCOME' | 'OUTCOME' | undefined ;
+};
+
+export const TransactionTypeDropdown = ({
+  onClick,
+  selectedType,
+}: TransactionTypeDropdownProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         <button className='flex items-center gap-2'>
-          <TransactionsIcon />
+          {selectedType === 'INCOME' && <IncomeIcon color />}
+          {selectedType === 'OUTCOME' && <ExpensesIcon color />}
+          {selectedType === undefined && <TransactionsIcon color />}
           <span className='text-sm text-gray-800 tracking-[-0.5] font-medium'>
-            Transações
+            {selectedType === 'INCOME' && 'Receitas'}
+            {selectedType === 'OUTCOME' && 'Despesas'}
+            {selectedType === undefined && 'Transações'}
           </span>
           <ChevronDownIcon />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.PortalContent className='w-64'>
-        <DropdownMenu.Item className='gap-2'>
+        <DropdownMenu.Item onClick={() => onClick('INCOME')} className='gap-2'>
           <IncomeIcon color />
           Receitas
         </DropdownMenu.Item>
-        <DropdownMenu.Item className='gap-2'>
+        <DropdownMenu.Item onClick={() => onClick('OUTCOME')} className='gap-2'>
           <ExpensesIcon color />
           Despesas
         </DropdownMenu.Item>
-        <DropdownMenu.Item className='gap-2'>
+        <DropdownMenu.Item onClick={() => onClick(undefined)} className='gap-2'>
           <TransactionsIcon color />
           Transações
         </DropdownMenu.Item>
