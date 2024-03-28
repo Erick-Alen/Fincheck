@@ -7,9 +7,9 @@ import {
   DashboardProvider,
 } from './components/DashboardContext/index.tsx';
 import { Fab } from './components/Fab/index.tsx';
-import NewAccountModal from './modals/NewAccountModal/index.tsx';
-import NewTransactionModal from './modals/NewTransactionModal/index.tsx';
-import EditAccountModal from './modals/EditAccountModal/index.tsx';
+import { NewAccountModal } from './modals/NewAccountModal/index.tsx';
+import { NewTransactionModal } from './modals/NewTransactionModal/index.tsx';
+import { EditAccountModal } from './modals/EditAccountModal/index.tsx';
 
 const Dashboard = () => {
   return (
