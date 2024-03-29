@@ -9,6 +9,8 @@ import { Button } from '@/view/components/Button';
 import { Transaction } from '@/app/entities/Transaction';
 import { ConfirmDeleteModal } from '@/view/components/ConfirmDeleteModal';
 import { TrashIcon } from '@/view/components/icons/TrashIcon';
+import { Category } from '@/app/entities/Category';
+import { BankAccount } from '@/app/entities/BankAccount';
 
 type EditTransactionModalProps = {
   transaction: Transaction | null;
@@ -94,7 +96,7 @@ export const EditTransactionModal = ({
                 value={value}
                 onChange={onChange}
                 placeholder='Categoria'
-                options={categories.map((category) => ({
+                options={categories.map((category: Category) => ({
                   value: category.id,
                   label: category.name,
                 }))}
@@ -111,7 +113,7 @@ export const EditTransactionModal = ({
                 value={value}
                 onChange={onChange}
                 placeholder={isIncome ? 'Receber com' : 'Pagar com'}
-                options={accounts.map((account) => ({
+                options={accounts.map((account: BankAccount) => ({
                   value: account.id,
                   label: account.name,
                 }))}
