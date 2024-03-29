@@ -15,12 +15,12 @@ import { FiltersModal } from './FiltersModal';
 import { formatDate } from '@/app/utils/formatDate';
 import { EditTransactionModal } from '../../modals/EditTransactionModal';
 import React from 'react';
+import { Transaction } from '@/app/entities/Transaction';
 
 export const Transactions = () => {
   const {
     sliderState,
     setSliderState,
-    windowWidth,
     transactions,
     isFiltersModalOpen,
     handleOpenFiltersModal,
@@ -118,7 +118,7 @@ export const Transactions = () => {
 
             {hasTransactions &&
               !isFetching &&
-              transactions.map((transaction) => (
+              transactions.map((transaction: Transaction) => (
                 <React.Fragment key={transaction.id}>
                   <div
                     key={transaction.id}
@@ -154,15 +154,16 @@ export const Transactions = () => {
                       {formatCurrency(transaction.value)}
                     </span>
                   </div>
-                  {transactionBeingEdited && (
-                    <EditTransactionModal
-                      transaction={transactionBeingEdited}
-                      open={isEditModalOpen}
-                      onClose={handleCloseTransactionModal}
-                    />
-                  )}
                 </React.Fragment>
               ))}
+              {transactionBeingEdited && (
+                <EditTransactionModal
+                  transaction={transactionBeingEdited}
+                  open={isEditModalOpen}
+                  onClose={handleCloseTransactionModal}
+                />
+              )}
+
           </div>
         </>
       )}
