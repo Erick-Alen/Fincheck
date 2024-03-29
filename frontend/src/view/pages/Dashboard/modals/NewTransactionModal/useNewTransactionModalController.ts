@@ -10,6 +10,7 @@ import { useCategories } from '@/app/hooks/useCategories';
 import { useMemo } from 'react';
 import { transactionsService } from '@/app/services/transactionsService';
 import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber';
+import { QUERY_KEYS } from '@/app/config/constants';
 
 const schema = z.object({
   value: z.string().min(1, 'value mandatory'),
@@ -56,8 +57,9 @@ export const useNewTransactionModalController = () => {
       })
       toast.success('Transaction created successfully');
       // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TRANSACTIONS]})
-      queryClient.invalidateQueries({ queryKey: ['transactions'] })
-      queryClient.invalidateQueries({ queryKey: ['bankAccounts'] })
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
+
       reset();
       closeNewTransactionModal();
     } catch {

@@ -11,6 +11,7 @@ import { usersService } from '../services/usersService';
 import toast from 'react-hot-toast';
 import { LaunchScreen } from '@/view/components/LaunchScreen';
 import { User } from '../entities/User';
+import { QUERY_KEYS } from '../config/constants';
 
 type AuthContextValue = {
   signedIn: boolean;
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const { isError, isFetching, isSuccess, data } = useQuery({
-    queryKey: ['users', 'me'],
+    queryKey: QUERY_KEYS.USERS_ME,
     queryFn: () => usersService.me(),
     enabled: signedIn,
     staleTime: Infinity,

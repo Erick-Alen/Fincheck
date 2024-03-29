@@ -7,6 +7,7 @@ import { bankAccountsService } from '@/app/services/bankAccountsService';
 import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
+import { QUERY_KEYS } from '@/app/config/constants';
 
 const schema = z.object({
   name: z.string().min(1, 'Account name is mandatory'),
@@ -57,10 +58,10 @@ export const useEditAccountModalController = () => {
         // enforcing that the value is not null or undefined
       })
       toast.success('Account updated successfully');
-      // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       reset();
       //TODO: fix react query invalidate queries
-      queryClient.invalidateQueries({queryKey: ['bankAccounts']})
+      // queryClient.invalidateQueries({queryKey: ['bankAccounts']})
       closeEditAccountModal();
       // not necessary, component is being unmounted
     } catch {
@@ -79,8 +80,8 @@ export const useEditAccountModalController = () => {
   const handleDeleteAccount = async () => {
     try {
       removeAccount(accountBeingEdited!.id)
-      // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
-      queryClient.invalidateQueries({queryKey: ['bankAccounts']})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
+      // queryClient.invalidateQueries({queryKey: ['bankAccounts']})
       closeEditAccountModal();
       toast.success('Account deleted successfully');
     } catch {

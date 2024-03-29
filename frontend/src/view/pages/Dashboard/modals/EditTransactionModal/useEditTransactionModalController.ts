@@ -10,6 +10,7 @@ import { transactionsService } from '@/app/services/transactionsService';
 import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber';
 import { Transaction } from '@/app/entities/Transaction';
 import { Category } from '@/app/entities/Category';
+import { QUERY_KEYS } from '@/app/config/constants';
 
 const schema = z.object({
   value: z.union([
@@ -67,8 +68,8 @@ export const useEditTransactionModalController = (
         type: transaction!.type,
         date: data.date.toISOString(),
       })
-      queryClient.invalidateQueries({ queryKey: ['transactions'] })
-      queryClient.invalidateQueries({ queryKey: ['bankAccounts'] })
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       toast.success('Transaction updated successfully');
       // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TRANSACTIONS]})
       onClose();
@@ -91,9 +92,8 @@ export const useEditTransactionModalController = (
   const handleDeleteTransaction = async () => {
     try {
       removeTransaction(transaction!.id)
-      // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
-      queryClient.invalidateQueries({ queryKey: ['transactions'] })
-      queryClient.invalidateQueries({ queryKey: ['bankAccounts'] })
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       onClose();
       toast.success('Transaction deleted successfully');
     } catch {

@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { bankAccountsService } from '@/app/services/bankAccountsService';
 import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber';
 import toast from 'react-hot-toast';
+import { QUERY_KEYS } from '@/app/config/constants';
 
 const schema = z.object({
   name: z.string().min(1, 'Account name is mandatory'),
@@ -41,8 +42,7 @@ export const useNewAccountModalController = () => {
         })
 
         toast.success('Account created successfully');
-        // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.ACCOUNTS]})
-        queryClient.invalidateQueries({queryKey: ['bankAccounts']})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
         closeNewAccountModal();
         reset();
       } catch {

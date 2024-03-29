@@ -14,5 +14,8 @@ export const MONTHS = [
 ]
 
 export const QUERY_KEYS = {
-  ACCOUNTS: 'accounts',
+  BANK_ACCOUNTS: ['bankAccounts'],
+  TRANSACTIONS: ['transactions'],
+  CATEGORIES: ['categories'],
+  USERS_ME: ['users', 'me'],
 }
