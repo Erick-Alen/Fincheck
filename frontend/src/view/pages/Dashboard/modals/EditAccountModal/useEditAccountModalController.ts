@@ -50,7 +50,7 @@ export const useEditAccountModalController = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      updateAccount({
+      await updateAccount({
         ...data,
         initialBalance: currencyStringToNumber(data.initialBalance),
         id: accountBeingEdited!.id
@@ -79,9 +79,8 @@ export const useEditAccountModalController = () => {
   const { mutateAsync: removeAccount, isPending: isPendingDeleteAccount } = useMutation({mutationFn: bankAccountsService.remove}) // tanstack-v5
   const handleDeleteAccount = async () => {
     try {
-      removeAccount(accountBeingEdited!.id)
+      await removeAccount(accountBeingEdited!.id)
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
-      // queryClient.invalidateQueries({queryKey: ['bankAccounts']})
       closeEditAccountModal();
       toast.success('Account deleted successfully');
     } catch {

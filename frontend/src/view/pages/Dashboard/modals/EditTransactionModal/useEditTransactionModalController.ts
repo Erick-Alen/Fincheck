@@ -35,6 +35,7 @@ export const useEditTransactionModalController = (
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -61,7 +62,7 @@ export const useEditTransactionModalController = (
   const onSubmit = handleSubmit(async data => {
     console.log(data);
     try {
-      updateTransaction({
+      await updateTransaction({
         ...data,
         id: transaction!.id,
         value: currencyStringToNumber(data.value),
@@ -72,6 +73,7 @@ export const useEditTransactionModalController = (
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       toast.success('Transaction updated successfully');
       // queryClient.invalidateQueries({queryKey: [QUERY_KEYS.TRANSACTIONS]})
+      reset()
       onClose();
     } catch {
       toast.error('Error updating transaction');
@@ -91,7 +93,7 @@ export const useEditTransactionModalController = (
 
   const handleDeleteTransaction = async () => {
     try {
-      removeTransaction(transaction!.id)
+      await removeTransaction(transaction!.id)
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       onClose();

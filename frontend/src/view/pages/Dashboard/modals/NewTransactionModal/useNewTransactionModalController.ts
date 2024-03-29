@@ -49,7 +49,7 @@ export const useNewTransactionModalController = () => {
 
   const onSubmit = handleSubmit(async data => {
     try {
-      mutateAsync({
+      await mutateAsync({
         ...data,
         value: currencyStringToNumber(data.value),
         type: newTransactionType!,

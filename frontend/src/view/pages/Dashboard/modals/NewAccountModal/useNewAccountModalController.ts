@@ -36,13 +36,13 @@ export const useNewAccountModalController = () => {
   // const { mutateAsync } = useMutation(bankAccountsService.create) tanstack-v4
     const onSubmit = handleSubmit(async (data) => {
       try {
-        mutateAsync({
+        await mutateAsync({
           ...data,
           initialBalance: currencyStringToNumber(data.initialBalance)
         })
 
         toast.success('Account created successfully');
-      queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
+        queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
         closeNewAccountModal();
         reset();
       } catch {
