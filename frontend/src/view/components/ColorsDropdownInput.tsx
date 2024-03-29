@@ -60,7 +60,7 @@ export const ColorsDropdownInput = ({
               className
             )}
           >
-            Cor
+            Color
             <div className='absolute right-3 top-1/2 -translate-y-1/2'>
               {!selectedColor && (
                 <ChevronDownIcon className='w-6 h-6 text-gray-800' />

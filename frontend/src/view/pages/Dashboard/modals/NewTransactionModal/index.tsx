@@ -6,6 +6,8 @@ import { Select } from '@/view/components/Select';
 import { DatePickerInput } from '@/view/components/DatePickerInput';
 import { Controller } from 'react-hook-form';
 import { Button } from '@/view/components/Button';
+import { Category } from '@/app/entities/Category';
+import { BankAccount } from '@/app/entities/BankAccount';
 
 export const NewTransactionModal = () => {
   const {
@@ -23,14 +25,14 @@ export const NewTransactionModal = () => {
   const isIncome = newTransactionType === 'INCOME';
   return (
     <Modal
-      title={isIncome ? 'Nova Receita' : 'Nova Despesa'}
+      title={isIncome ? 'New Receipt' : 'New Expense'}
       open={isNewTransactionModalOpen}
       onClose={closeNewTransactionModal}
     >
       <form onSubmit={onSubmit}>
         <div className='mt-10 flex flex-col gap-4'>
           <span className='text-gray-600 tracking-[0.5px] text-xs'>
-            {isIncome ? 'Da receita' : 'Da despesa'}
+            {isIncome ? 'Da receipt' : 'Da expense'}
           </span>
           <div className='flex items-center gap-2'>
             <span className='text-gray-600 tracking-[0.5px] text-lg'>R$</span>
@@ -51,7 +53,7 @@ export const NewTransactionModal = () => {
           <Input
             error={errors.name?.message}
             type='text'
-            placeholder={isIncome ? 'Nome da receita' : 'Nome da despesa'}
+            placeholder={isIncome ? 'Receipt name' : 'Expense name'}
             {...register('name')}
           />
           <Controller
@@ -62,8 +64,8 @@ export const NewTransactionModal = () => {
                 error={errors.categoryId?.message}
                 value={value}
                 onChange={onChange}
-                placeholder='Categoria'
-                options={categories.map((category) => ({
+                placeholder='Category'
+                options={categories.map((category: Category) => ({
                   value: category.id,
                   label: category.name,
                 }))}
@@ -79,8 +81,8 @@ export const NewTransactionModal = () => {
                 error={errors.bankAccountId?.message}
                 value={value}
                 onChange={onChange}
-                placeholder={isIncome ? 'Receber com' : 'Pagar com'}
-                options={accounts.map((account) => ({
+                placeholder={isIncome ? 'Receive with' : 'Pay with'}
+                options={accounts.map((account: BankAccount) => ({
                   value: account.id,
                   label: account.name,
                 }))}

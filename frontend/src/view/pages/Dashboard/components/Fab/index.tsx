@@ -18,11 +18,11 @@ export const Fab = () => {
         <DropdownMenu.PortalContent className='gap-2'>
           <DropdownMenu.Item onClick={() => openNewTransactionModal('OUTCOME')}>
             <CategoryIcon type='outcome' />
-            Nova Despesa
+            New Expense
           </DropdownMenu.Item>
           <DropdownMenu.Item onClick={() => openNewTransactionModal('INCOME')}>
             <CategoryIcon type='income' />
-            Nova Receita
+            New Recipe
           </DropdownMenu.Item>
           {/* <DropdownMenu.Item>
             <TransactionsIcon color />
@@ -30,7 +30,7 @@ export const Fab = () => {
           </DropdownMenu.Item> */}
           <DropdownMenu.Item onClick={openNewAccountModal}>
             <BankAccountIcon />
-            Nova Conta
+            New Account
           </DropdownMenu.Item>
         </DropdownMenu.PortalContent>
       </DropdownMenu.Root>

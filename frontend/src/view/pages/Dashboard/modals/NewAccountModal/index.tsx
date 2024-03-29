@@ -20,13 +20,13 @@ export const NewAccountModal = () => {
   } = useNewAccountModalController();
   return (
     <Modal
-      title='Nova Conta'
+      title='New Account'
       open={isNewAccountModalOpen}
       onClose={closeNewAccountModal}
     >
       <form onSubmit={onSubmit}>
         <div className='mt-10 flex flex-col gap-4'>
-          <span className='text-gray-600 tracking-[0.5px] text-xs'>Saldo</span>
+          <span className='text-gray-600 tracking-[0.5px] text-xs'>Balance</span>
           <div className='flex items-center gap-2'>
             <span className='text-gray-600 tracking-[0.5px] text-lg'>R$</span>
             <Controller
@@ -46,7 +46,7 @@ export const NewAccountModal = () => {
         <div className='flex flex-col mt-10 gap-4'>
           <Input
             type='text'
-            placeholder='Nome da conta'
+            placeholder='Account name'
             error={errors.name?.message}
             {...register('name')}
           />
@@ -59,19 +59,19 @@ export const NewAccountModal = () => {
                 error={errors.type?.message}
                 value={value}
                 onChange={onChange}
-                placeholder='Tipo'
+                placeholder='Type'
                 options={[
                   {
                     value: 'CHECKING',
-                    label: 'Conta corrente',
+                    label: 'Checking account',
                   },
                   {
                     value: 'INVESTMENT',
-                    label: 'Investimento',
+                    label: 'Investment',
                   },
                   {
                     value: 'CASH',
-                    label: 'Dinheiro',
+                    label: 'Cash',
                   },
                 ]}
               />
@@ -91,7 +91,7 @@ export const NewAccountModal = () => {
           />
         </div>
         <Button isPending={isPending} type='submit' className='w-full mt-6'>
-          Criar
+          Create
         </Button>
       </form>
     </Modal>

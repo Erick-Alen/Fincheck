@@ -31,7 +31,7 @@ export const DatePickerInput = ({ className, error, value, onChange }: DatePicke
             )}
           >
             <span className='absolute left-3 top-2 text-xs text-gray-700 pointer-events-none'>
-              Data
+              Date
             </span>
             <span>{formatDate(selectedDate)}</span>
           </button>

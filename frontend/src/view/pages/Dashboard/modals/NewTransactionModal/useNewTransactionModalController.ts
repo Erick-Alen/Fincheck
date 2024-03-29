@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { bankAccountsService } from '@/app/services/bankAccountsService';
+import { Category } from '@/app/entities/Category';
 import { useBankAccounts } from '@/app/hooks/useBankAccounts';
 import { useCategories } from '@/app/hooks/useCategories';
 import { useMemo } from 'react';
@@ -38,7 +38,7 @@ export const useNewTransactionModalController = () => {
   const { accounts } = useBankAccounts();
   const { categories: categoriesList } = useCategories();
   const categories = useMemo(() => {
-    return categoriesList.filter(category => category.type === newTransactionType)
+    return categoriesList.filter((category: Category) => category.type === newTransactionType)
   }, [categoriesList, newTransactionType])
 
   const { isPending, mutateAsync } = useMutation({ mutationFn: transactionsService.create }) // tanstack-v5

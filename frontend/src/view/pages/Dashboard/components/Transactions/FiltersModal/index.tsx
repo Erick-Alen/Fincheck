@@ -4,6 +4,7 @@ import { Modal } from '@/view/components/Modal';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import { FC } from 'react';
 import { useFiltersModal } from './useFiltersModalController';
+import { BankAccount } from '@/app/entities/BankAccount';
 
 type FiltersModalProps = {
   open: boolean;
@@ -30,10 +31,10 @@ export const FiltersModal: FC<FiltersModalProps> = ({
     <Modal open={open} onClose={onClose} title='Filters'>
       <div>
         <span className='text-lg font-bold tracking-[-1px] mt-2 text-gray-800'>
-          Conta
+          Account
         </span>
         <div className='mt-2 space-y-2'>
-          {accounts.map((account) => (
+          {accounts.map((account: BankAccount) => (
             <button
               key={account.id}
               onClick={() => handleSelectionBankAccountId(account.id)}

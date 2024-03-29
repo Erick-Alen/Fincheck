@@ -9,6 +9,7 @@ import { formatCurrency } from '@/app/utils/formatCurrency';
 import { cn } from '@/app/utils/cn';
 import { Spinner } from '@/view/components/Spinner';
 import { PlusIcon } from '@radix-ui/react-icons';
+import { BankAccount } from '@/app/entities/BankAccount';
 
 export const Accounts = () => {
   const {
@@ -21,7 +22,7 @@ export const Accounts = () => {
     openNewAccountModal,
     accounts,
     currentBalance,
-    openEditAccountModal
+    openEditAccountModal,
   } = useAccountsController();
   return (
     <div className='bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col'>
@@ -33,7 +34,7 @@ export const Accounts = () => {
       {!isLoading && (
         <>
           <span className='text-white font-medium tracking-[-0.5px] block'>
-            Saldo Total
+            Total balance
           </span>
           <div className='flex items-center gap-2 '>
             <strong
@@ -57,7 +58,7 @@ export const Accounts = () => {
               <>
                 <div className='mb-4'>
                   <strong className='text-white text-lg font-bold tracking-[-0.5px]'>
-                    Minhas contas
+                    My accounts
                   </strong>
                 </div>
                 <button
@@ -69,7 +70,7 @@ export const Accounts = () => {
                     <PlusIcon className='w-6 h-6' />
                   </div>
                   <span className='text-lg font-medium tracking-[-0.5px] block w-32'>
-                    Cadastre uma nova conta
+                    Register a new account
                   </span>
                 </button>
               </>
@@ -91,18 +92,16 @@ export const Accounts = () => {
                     className='flex items-center justify-between mb-4'
                   >
                     <strong className='text-white text-lg font-bold tracking-[-0.5px]'>
-                      Minhas contas
+                      My accounts
                     </strong>
                     <AccountsSliderNavigation
                       isBeginning={sliderState.isBeginning}
                       isEnd={sliderState.isEnd}
                     />
                   </div>
-                  {accounts.map((account) => (
+                  {accounts.map((account: BankAccount) => (
                     <SwiperSlide key={account.id}>
-                      <AccountCard
-                        data={account}
-                      />
+                      <AccountCard data={account} />
                     </SwiperSlide>
                   ))}
                 </Swiper>

@@ -50,7 +50,7 @@ export const EditAccountModal = () => {
         <form onSubmit={onSubmit}>
           <div className='mt-10 flex flex-col gap-4'>
             <span className='text-gray-600 tracking-[0.5px] text-xs'>
-              Saldo
+              Balance
             </span>
             <div className='flex items-center gap-2'>
               <span className='text-gray-600 tracking-[0.5px] text-lg'>R$</span>
@@ -71,7 +71,7 @@ export const EditAccountModal = () => {
           <div className='flex flex-col mt-10 gap-4'>
             <Input
               type='text'
-              placeholder='Nome da conta'
+              placeholder='Account name'
               error={errors.name?.message}
               {...register('name')}
             />
@@ -84,19 +84,19 @@ export const EditAccountModal = () => {
                   error={errors.type?.message}
                   value={value}
                   onChange={onChange}
-                  placeholder='Tipo'
+                  placeholder='Type'
                   options={[
                     {
                       value: 'CHECKING',
-                      label: 'Conta corrente',
+                      label: 'Checking account',
                     },
                     {
                       value: 'INVESTMENT',
-                      label: 'Investimento',
+                      label: 'Investment',
                     },
                     {
                       value: 'CASH',
-                      label: 'Dinheiro',
+                      label: 'Cash',
                     },
                   ]}
                 />

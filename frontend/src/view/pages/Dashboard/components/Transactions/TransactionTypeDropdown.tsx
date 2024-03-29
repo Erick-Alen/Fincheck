@@ -21,9 +21,9 @@ export const TransactionTypeDropdown = ({
           {selectedType === 'OUTCOME' && <ExpensesIcon color />}
           {selectedType === undefined && <TransactionsIcon color />}
           <span className='text-sm text-gray-800 tracking-[-0.5] font-medium'>
-            {selectedType === 'INCOME' && 'Receitas'}
-            {selectedType === 'OUTCOME' && 'Despesas'}
-            {selectedType === undefined && 'Transações'}
+            {selectedType === 'INCOME' && 'Receipts'}
+            {selectedType === 'OUTCOME' && 'Expenses'}
+            {selectedType === undefined && 'Transactions'}
           </span>
           <ChevronDownIcon />
         </button>
@@ -31,15 +31,15 @@ export const TransactionTypeDropdown = ({
       <DropdownMenu.PortalContent className='w-64'>
         <DropdownMenu.Item onClick={() => onClick('INCOME')} className='gap-2'>
           <IncomeIcon color />
-          Receitas
+          Receipts
         </DropdownMenu.Item>
         <DropdownMenu.Item onClick={() => onClick('OUTCOME')} className='gap-2'>
           <ExpensesIcon color />
-          Despesas
+          Expenses
         </DropdownMenu.Item>
         <DropdownMenu.Item onClick={() => onClick(undefined)} className='gap-2'>
           <TransactionsIcon color />
-          Transações
+          Transactions
         </DropdownMenu.Item>
       </DropdownMenu.PortalContent>
     </DropdownMenu.Root>

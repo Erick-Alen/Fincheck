@@ -34,7 +34,7 @@ export const AccountCard = ({ data }: AccountCardProps) => {
         >
           {formatCurrency(currentBalance)}
         </span>
-        <small className='text-sm text-gray-600 '>Saldo Atual</small>
+        <small className='text-sm text-gray-600 '>Current balance</small>
       </div>
     </div>
   );

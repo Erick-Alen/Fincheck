@@ -1,16 +1,15 @@
 import { z } from 'zod';
-import { useDashboard } from '../../components/DashboardContext/useDashboardContext'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { bankAccountsService } from '@/app/services/bankAccountsService';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useBankAccounts } from '@/app/hooks/useBankAccounts';
 import { useCategories } from '@/app/hooks/useCategories';
 import { useMemo, useState } from 'react';
 import { transactionsService } from '@/app/services/transactionsService';
 import { currencyStringToNumber } from '@/app/utils/currencyStringToNumber';
 import { Transaction } from '@/app/entities/Transaction';
+import { Category } from '@/app/entities/Category';
 
 const schema = z.object({
   value: z.union([
@@ -50,7 +49,7 @@ export const useEditTransactionModalController = (
   const { accounts } = useBankAccounts();
   const { categories: categoriesList } = useCategories();
   const categories = useMemo(() => {
-    return categoriesList.filter(category => category.type === transaction?.type)
+    return categoriesList.filter((category: Category) => category.type === transaction?.type)
   }, [categoriesList, transaction])
 
   const { mutateAsync: updateTransaction, isPending: isPendingUpdateTransaction } = useMutation({ mutationFn: transactionsService.update }) // tanstack-v5
