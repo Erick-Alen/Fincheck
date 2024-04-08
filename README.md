@@ -36,7 +36,7 @@ Then, type the following command into the terminal:
 * `-d`: dettached mode, runs the docker container in background;
 * `-p`: define the ports that the database is being exposed for your computer.
 ```bash
-docker run -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres -p 5432:5432
+docker run --name pg -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres -p 5432:5432
 ```
 
 To execute the frontend and API, open two separate terminals, get into `api`  and `frontend` folders in each one of them and execute the following commands:
