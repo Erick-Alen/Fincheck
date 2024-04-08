@@ -31,6 +31,7 @@
     "react-router-dom": "^6.21.1",
     "swiper": "^11.0.6",
     "tailwind-merge": "^2.2.0",
+    "yarn": "^1.22.22",
     "zod": "^3.22.4"
   },
   "devDependencies": {
