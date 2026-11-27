@@ -1,6 +1,5 @@
 import { DropdownMenu } from '@/view/components/Dropdown';
 import { BankAccountIcon } from '@/view/components/icons/BankAccountIcon';
-import { TransactionsIcon } from '@/view/components/icons/TransactionsIcon';
 import { CategoryIcon } from '@/view/components/icons/categories/CategoryIcon';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { useDashboard } from '../DashboardContext/useDashboardContext';

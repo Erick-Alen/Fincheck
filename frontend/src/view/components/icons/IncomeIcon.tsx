@@ -1,5 +1,3 @@
-import { ChooseiconColor } from '@/app/utils/ChooseiconColor';
-
 // export type IncomeIconProps = {
 //   type?: 'income' | 'expense' | 'transactions' | undefined;
 // };

@@ -3,7 +3,7 @@ import { useDashboard } from '../../components/DashboardContext/useDashboardCont
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Category } from '@/app/entities/Category';
 import { useBankAccounts } from '@/app/hooks/useBankAccounts';
 import { useCategories } from '@/app/hooks/useCategories';

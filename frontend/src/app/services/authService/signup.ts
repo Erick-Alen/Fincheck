@@ -1,4 +1,3 @@
-import { sleep } from '../../utils/sleep';
 import { httpClient } from '../httpClient';
 
 export type SignUpRequest = {
