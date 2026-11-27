@@ -50,7 +50,7 @@ export const EditAccountModal = () => {
         <form onSubmit={onSubmit}>
           <div className='mt-10 flex flex-col gap-4'>
             <span className='text-gray-600 tracking-[0.5px] text-xs'>
-              Balance
+              Opening balance
             </span>
             <div className='flex items-center gap-2'>
               <span className='text-gray-600 tracking-[0.5px] text-lg'>R$</span>

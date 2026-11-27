@@ -1,71 +1,107 @@
-# Fincheck - Your personal financial application
+# Fincheck
 
-## About
+Fincheck is a personal finance tracker for bank accounts, income, and expenses. It includes a React dashboard and a NestJS API backed by PostgreSQL.
 
-- [Preparing the environment](#install)
-- [Running app in localhost](#localhost)
+## Demo: manage accounts and transactions
 
-## 🧐 About
+This Chrome run used the local API and PostgreSQL with fictitious data. The dashboard started with **R$ 600,00** across a checking account and a cash account. A freelance payment and three expenses brought the total to **R$ 1.660,00**. The November list shows three entries because the transit pass was dated in October.
 
-This project was made from the classes inside the [JStack](https://jstack.com.br/) course.
+![Fincheck showing two accounts, one receipt, two November expenses, and a total balance of R$ 1.660,00](docs/assets/expense-dashboard.png)
 
-The application was made to be used as a financial controller of your finances, making it easy to make a balance of the income and outcomes of your accounts
+| Workflow | Observed result |
+| --- | --- |
+| Register, sign out, and sign in | The account and its remaining transactions were still present after signing back in and reloading. |
+| Create and rename accounts | Created **Demo Checking** and **Demo Wallet**. Renaming the wallet to **Daily Cash** preserved its **R$ 100,00** opening balance and **R$ 75,50** current balance. |
+| Add income and expenses | Recorded a **R$ 1.200,00** receipt and categorized expenses. The new expense form returned to today's date after a backdated entry. |
+| Filter transactions | **Receipts** showed only the payment. **Expenses** with **Demo Wallet** selected showed only the metro ticket. Switching months showed the October pass, and selecting 2025 showed an empty list. |
+| Edit and delete records | Changing **Weekly groceries** from **R$ 85,50** to **R$ 90,00** reduced the total to **R$ 1.655,50**. Deleting the metro ticket restored **R$ 24,50**. Deleting the cash account also removed its remaining parking expense from the list. |
+| Hide and reveal amounts | The eye control hid the amounts and remembered that preference after a reload. |
 
-Here, you can create bank accounts and activities where you money was destined to.
+<details>
+<summary>Filter expenses by account and date</summary>
 
-Recursos incluídos neste repositório:
+![Filters dialog with Demo Wallet selected and the year set to 2026](docs/assets/transaction-filters.png)
 
-- [Typescript](https://www.typescriptlang.org/): superset do JavaScript's superset with static typinc, completely optional, but recommended.
+![November expenses filtered to Demo Wallet, showing only the R$ 24,50 metro ticket](docs/assets/filtered-expenses.png)
 
-- [React](https://reactjs.org/): A library built with focus on building web interfaces from Javascript components.
+</details>
 
-## Installation <a name="install" />
-You'll need to install nodeJS to run this application. Node is a cross-platform, open-source JavaScript runtime environment that can run on Windows, Linux, Unix, macOS, and etc. You can download the latest version on the [Offical Site](https://nodejs.org/en/download). It'as recommended to download the latest version maked as `LTS (Long Term Support)`.
+<details>
+<summary>Edit an expense and delete a sample account</summary>
 
-After that, it will be required for you to have a database to keep al the data in memory. The easier way to make it is Using [Docker](https://docs.docker.com/get-docker/). Docker is a engine container that runs vrtual machines `(VMs)` from your computer kernel, making it easier to create and execute applications using containers. This assures you that the application running inside this isolated environment will not be affected by any version changes in your operational system, as well as making it easier to manage and scale these applications.
+![Edit Expense dialog with Weekly groceries changed to R$ 90,00](docs/assets/edit-expense.png)
 
-## Running app in localhost <a name="localhost" />
-### Building Postgres database with Docker
-After installing docker, open your terminal and type the docker command to check if docker was installed effectivelly.
+![Confirmation dialog warning that deleting an account also deletes its related records](docs/assets/delete-account.png)
 
-Then, type the following command into the terminal:
+![Dashboard after signing back in, showing one account, the retained transactions, and a total of R$ 1.580,00](docs/assets/dashboard-after-deletion.png)
 
-> Here i'm defining the user and password as root and the port 5432 as the standard of postgres database, just to execute into the localhost. You can change it but don't forget to update the credentials in the `DATABASE_URL` environment variable in the `.env` inside the `api` folder.
-#### Tags:
-* `-e`: environment variables;
-* `-d`: dettached mode, runs the docker container in background;
-* `-p`: define the ports that the database is being exposed for your computer.
+</details>
+
+## Prerequisites
+
+- Node.js 24 and npm (the demo used Node.js 24.11.0).
+- A local PostgreSQL database. The demo used a standalone PostgreSQL instance. The command below shows the Docker setup.
+
+## Environment variables
+
+| File | Variable | Purpose |
+| --- | --- | --- |
+| `api/.env` | `DATABASE_URL` | PostgreSQL connection URL for Prisma. |
+| `api/.env` | `JWT_SECRET` | Local signing secret. Replace the example placeholder with a generated value. |
+| `frontend/.env` | `VITE_API_URL` | API base URL, `http://localhost:5000` for this setup. |
+
+## Run locally
+
+From the repository root, start PostgreSQL. The credentials here are for a disposable local database.
+
 ```bash
-docker run --name pg -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres -p 5432:5432
+docker run -d --name fincheck-db -p 127.0.0.1:5432:5432 \
+  -e POSTGRES_USER=fincheck -e POSTGRES_PASSWORD=fincheck \
+  -e POSTGRES_DB=fincheck postgres:16
 ```
 
-To execute the frontend and API, open two separate terminals, get into `api`  and `frontend` folders in each one of them and execute the following commands:
+In the API terminal, copy the example and replace the signing secret in the copy. If you use another database, update `DATABASE_URL` to match.
 
-### Executing API on development mode
 ```bash
 cd api
+cp .env.example .env
+node -e 'console.log(require("node:crypto").randomBytes(32).toString("hex"))'
+# Set JWT_SECRET in .env to the generated value.
+npm ci
+npx --no-install prisma migrate deploy
+npx --no-install prisma generate
+npm run start:dev
 ```
-#### Installing the dependencies
-```bash
-yarn
-```
-#### Executing database migrations with Prisma ORM
-```bash
-yarn prisma migrate dev
-```
-#### Running in dev mode
-```bash
-yarn start:dev
-```
-### Executing Frontend on development mode
+
+In a second terminal, from the repository root:
+
 ```bash
 cd frontend
+cp .env.example .env
+npm ci
+npm run dev -- --host 127.0.0.1
 ```
-#### Installing the dependencies
-```bash
-yarn
-```
-#### Running in dev mode
-```bash
-yarn dev
-```
+
+To use the same production preview as the screenshots, run `npm run build` and then `npm run preview -- --host 127.0.0.1 --port 3001` from `frontend`.
+
+## Reproduce the demo
+
+1. Open [the sign-up page](http://127.0.0.1:3000/register), or use port 3001 for the production preview. Register a sample user, such as `demo@example.test`.
+2. Select **Register a new account**. Create **Demo Checking** as a **Checking account** with an opening balance of **R$ 500,00**. Use **+ → New Account** to create **Demo Wallet** as **Cash** with **R$ 100,00**. Pick a different color for each account.
+3. Use **+ → New Recipe** to add income and **+ → New Expense** to add expenses. Enter the sample records below and check that the total reaches **R$ 1.660,00**. If values are blurred, click the eye next to **Total balance**.
+
+| Transaction | Amount | Category | Account | Date |
+| --- | --- | --- | --- | --- |
+| Freelance payment | +R$ 1.200,00 | Freelance | Demo Checking | Today |
+| Weekly groceries | −R$ 85,50 | Mercado | Demo Checking | Today |
+| Metro ticket | −R$ 24,50 | Transporte | Demo Wallet | Today |
+| October transit pass | −R$ 30,00 | Transporte | Demo Checking | The 10th of the previous month |
+
+4. Switch **Transactions** to **Receipts**, then **Expenses**. Open the funnel menu, select **Demo Wallet**, and click **Aplicar Filtros**. The current month shows only **Metro ticket**. Clear the account filter by selecting the wallet again. Test a year with no records, then select the appropriate year and month to find the transit pass. Reset the view to **Transactions** in the current month before continuing.
+5. Open **Weekly groceries**, change its amount to **R$ 90,00**, and save. Click **Demo Wallet**, rename it **Daily Cash**, and save without changing its **Opening balance**.
+6. Open **Metro ticket**, click the trash icon, and confirm. Add a **R$ 10,00** **Parking sample** expense to **Daily Cash** with today's date. Then open the **Daily Cash** account and use its trash icon to delete the sample account. Confirm that both the account and parking expense disappear and the total is **R$ 1.580,00**.
+7. Hide the amounts, reload, and check that they are still hidden. Reveal them, choose **Sair** in the profile menu, and sign back in. **Demo Checking**, **Freelance payment**, and the edited **Weekly groceries** remain on the dashboard.
+
+## Attribution
+
+Built during the [JStack](https://jstack.com.br/) course.

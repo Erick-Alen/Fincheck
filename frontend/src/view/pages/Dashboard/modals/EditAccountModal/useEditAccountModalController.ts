@@ -35,7 +35,7 @@ export const useEditAccountModalController = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       name: accountBeingEdited?.name,
-      initialBalance: accountBeingEdited?.currentBalance,
+      initialBalance: accountBeingEdited?.initialBalance,
       type: accountBeingEdited?.type,
       color: accountBeingEdited?.color
     }
@@ -81,6 +81,7 @@ export const useEditAccountModalController = () => {
     try {
       await removeAccount(accountBeingEdited!.id)
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
+      queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
       closeEditAccountModal();
       toast.success('Account deleted successfully');
     } catch {

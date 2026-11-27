@@ -4,12 +4,11 @@ import {
   ReactNode,
   createContext,
   useCallback,
-  useEffect,
   useState,
 } from 'react';
 
 type DashboardContextProps = {
-  valuesVisible: boolean | undefined;
+  valuesVisible: boolean;
   toggleValuesVisible: () => void;
 
   isNewAccountModalOpen: boolean;
@@ -30,14 +29,8 @@ type DashboardContextProps = {
 export const DashboardContext = createContext({} as DashboardContextProps);
 
 export const DashboardProvider = ({ children }: { children: ReactNode }) => {
-  //Values visible localStorage retrieval
-  const [valuesVisible, setValuesVisible] = useState<boolean | undefined>(
-    () => {
-      const visibleValues = localStorage.getItem(storageKeys.VALUES_VISIBLE);
-      if (visibleValues) {
-        return visibleValues === 'true' ? true : false;
-      }
-    }
+  const [valuesVisible, setValuesVisible] = useState(
+    () => localStorage.getItem(storageKeys.VALUES_VISIBLE) === 'true'
   );
 
   //NEW TRANSACTION MODAL
@@ -68,12 +61,10 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     setIsNewAccountModalOpen(false)
   }, [])
   const toggleValuesVisible = useCallback(() => {
-    setValuesVisible((prev) => !prev);
-    localStorage.setItem(
-      storageKeys.VALUES_VISIBLE,
-      JSON.stringify(!valuesVisible)
-    );
-  }, []);
+    const nextValue = !valuesVisible;
+    setValuesVisible(nextValue);
+    localStorage.setItem(storageKeys.VALUES_VISIBLE, JSON.stringify(nextValue));
+  }, [valuesVisible]);
 
   //EDIT ACCOUNT MODAL
   const [isEditAccountModalOpen, setIsEditAccountModalOpen] = useState<boolean>(false);
@@ -87,13 +78,6 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
     setIsEditAccountModalOpen(false);
   }, []);
 
-
-  useEffect(() => {
-    const valuesVisible = localStorage.getItem('valuesVisible');
-    if (valuesVisible) {
-      setValuesVisible(valuesVisible === 'true' ? true : false);
-    }
-  }, []);
   return (
     <DashboardContext.Provider
       value={{

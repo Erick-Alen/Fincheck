@@ -1,21 +1,16 @@
 import { plainToClass } from 'class-transformer'
 import { IsNotEmpty, IsString, NotEquals, validateSync } from 'class-validator'
-// import 'dotenv/config'
+import 'dotenv/config'
+
 class Env{
   @IsString()
   @IsNotEmpty()
   @NotEquals('YOUR_SECRET')
   jwtSecret: string
-
-  @IsString()
-  @IsNotEmpty()
-  @NotEquals('YOUR_DATABASE_URL')
-  dbUrl: string
 }
 
 export const env: Env = plainToClass(Env, {
-  jwtSecret: 'SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-  dbUrl:'postgresql://root:root@localhost:5432/fincheck?schema=public?'
+  jwtSecret: process.env.JWT_SECRET,
 })
 
 const errors = validateSync(env);

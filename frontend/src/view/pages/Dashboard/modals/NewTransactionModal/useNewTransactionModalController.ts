@@ -3,7 +3,7 @@ import { useDashboard } from '../../components/DashboardContext/useDashboardCont
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Category } from '@/app/entities/Category';
 import { useBankAccounts } from '@/app/hooks/useBankAccounts';
 import { useCategories } from '@/app/hooks/useCategories';
@@ -30,7 +30,6 @@ export const useNewTransactionModalController = () => {
     register,
     control,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<FormData>({
     resolver: zodResolver(schema)
@@ -60,7 +59,6 @@ export const useNewTransactionModalController = () => {
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
 
-      reset();
       closeNewTransactionModal();
     } catch {
       toast.error('Error creating transaction');
