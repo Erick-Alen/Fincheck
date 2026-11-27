@@ -30,7 +30,6 @@ export const useNewTransactionModalController = () => {
     register,
     control,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm<FormData>({
     resolver: zodResolver(schema)
@@ -60,7 +59,6 @@ export const useNewTransactionModalController = () => {
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.BANK_ACCOUNTS})
       queryClient.invalidateQueries({queryKey: QUERY_KEYS.TRANSACTIONS})
 
-      reset();
       closeNewTransactionModal();
     } catch {
       toast.error('Error creating transaction');

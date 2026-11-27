@@ -15,7 +15,7 @@ const Dashboard = () => {
   return (
     <DashboardProvider>
       <DashboardContext.Consumer>
-        {({ accountBeingEdited }) => (
+        {({ accountBeingEdited, isNewTransactionModalOpen }) => (
           <div className='h-full p-4 md:px-8 md:pb-16 md:pt-6 flex flex-col gap-4'>
             <header className='h-10 flex items-center justify-between'>
               <Logo className='h-6 text-teal-900' />
@@ -33,7 +33,7 @@ const Dashboard = () => {
             </main>
             <Fab />
             <NewAccountModal />
-            <NewTransactionModal />
+            {isNewTransactionModalOpen && <NewTransactionModal />}
             {accountBeingEdited && <EditAccountModal />}
           </div>
         )}
